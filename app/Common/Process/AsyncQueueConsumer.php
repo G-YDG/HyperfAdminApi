@@ -7,7 +7,13 @@ declare(strict_types=1);
  *  * @link     https://github.com/G-YDG/HyperfAdminApi
  *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
-return [
-    'http' => [
-    ],
-];
+
+namespace App\Common\Process;
+
+use Hyperf\AsyncQueue\Process\ConsumerProcess;
+use Hyperf\Process\Annotation\Process;
+
+#[Process]
+class AsyncQueueConsumer extends ConsumerProcess
+{
+}

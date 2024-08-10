@@ -7,7 +7,11 @@ declare(strict_types=1);
  *  * @link     https://github.com/G-YDG/HyperfAdminApi
  *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
-return [
-    'http' => [
-    ],
-];
+
+namespace App\Common\Model;
+
+use Hyperf\DbConnection\Model\Model as BaseModel;
+
+abstract class Model extends BaseModel
+{
+}

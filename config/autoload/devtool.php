@@ -2,43 +2,41 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
+ * This file is part of HyperfAdmin.
  *
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
- * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
 return [
     'generator' => [
         'amqp' => [
             'consumer' => [
-                'namespace' => 'App\\Amqp\\Consumer',
+                'namespace' => 'App\Common\Amqp\Consumer',
             ],
             'producer' => [
-                'namespace' => 'App\\Amqp\\Producer',
+                'namespace' => 'App\Common\Amqp\Producer',
             ],
         ],
         'aspect' => [
-            'namespace' => 'App\\Aspect',
+            'namespace' => 'App\Common\Aspect',
         ],
         'command' => [
-            'namespace' => 'App\\Command',
+            'namespace' => 'App\Common\Command',
         ],
         'controller' => [
-            'namespace' => 'App\\Controller',
+            'namespace' => 'App\Common\Controller',
         ],
         'job' => [
-            'namespace' => 'App\\Job',
+            'namespace' => 'App\Common\Job',
         ],
         'listener' => [
-            'namespace' => 'App\\Listener',
+            'namespace' => 'App\Common\Listener',
         ],
         'middleware' => [
-            'namespace' => 'App\\Middleware',
+            'namespace' => 'App\Common\Middleware',
         ],
         'Process' => [
-            'namespace' => 'App\\Processes',
+            'namespace' => 'App\Common\Processes',
         ],
     ],
 ];

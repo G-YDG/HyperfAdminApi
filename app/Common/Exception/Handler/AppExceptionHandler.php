@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
+ * This file is part of HyperfAdmin.
  *
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
- * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
 
-namespace App\Exception\Handler;
+namespace App\Common\Exception\Handler;
 
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\ExceptionHandler\ExceptionHandler;

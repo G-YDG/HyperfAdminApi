@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
+ * This file is part of HyperfAdmin.
  *
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
- * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
+use app\Common\Exception\Handler\AppExceptionHandler;
+use Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler;
+
 return [
     'handler' => [
         'http' => [
-            Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler::class,
-            App\Exception\Handler\AppExceptionHandler::class,
+            HttpExceptionHandler::class,
+            AppExceptionHandler::class,
         ],
     ],
 ];
