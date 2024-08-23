@@ -33,7 +33,7 @@ return [
                 'path' => 'app/Common/Model',
                 'force_casts' => true,
                 'inheritance' => 'Model',
-                'uses' => 'App\Common\Model',
+                'uses' => 'HyperfAdminCore\Model',
                 'table_mapping' => [],
                 'with_comments' => true,
             ],

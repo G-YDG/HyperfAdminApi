@@ -7,14 +7,15 @@ declare(strict_types=1);
  *  * @link     https://github.com/G-YDG/HyperfAdminApi
  *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
-use app\Common\Exception\Handler\AppExceptionHandler;
-use Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler;
 
 return [
     'handler' => [
         'http' => [
-            HttpExceptionHandler::class,
-            AppExceptionHandler::class,
+            App\Common\Exception\Handler\ValidationExceptionHandler::class,
+            App\Common\Exception\Handler\HttpExceptionHandler::class,
+            App\Common\Exception\Handler\AuthExceptionHandler::class,
+            App\Common\Exception\Handler\UserExceptionHandler::class,
+            App\Common\Exception\Handler\AppExceptionHandler::class,
         ],
     ],
 ];

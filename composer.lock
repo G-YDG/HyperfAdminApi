@@ -4,8 +4,157 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0361444e5152a96db996a31312e655f",
+    "content-hash": "ae8ce425653972454cb9ab8a30124ae5",
     "packages": [
+        {
+            "name": "96qbhy/hyperf-auth",
+            "version": "v3.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qbhy/hyperf-auth.git",
+                "reference": "0252048d758c1c793ebe6448f3fd744e4e2c7793"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qbhy/hyperf-auth/zipball/0252048d758c1c793ebe6448f3fd744e4e2c7793",
+                "reference": "0252048d758c1c793ebe6448f3fd744e4e2c7793",
+                "shasum": ""
+            },
+            "require": {
+                "96qbhy/simple-jwt": "^v1.5",
+                "ext-json": "*",
+                "ext-redis": "*",
+                "hyperf/cache": "^3.1",
+                "hyperf/di": "^3.1",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "brainmaestro/composer-git-hooks": "^2.8",
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "hyperf/command": "^3.1",
+                "hyperf/config": "^3.1",
+                "hyperf/database": "^3.1",
+                "hyperf/event": "^3.1",
+                "hyperf/framework": "^3.1",
+                "hyperf/redis": "^3.1",
+                "hyperf/session": "^3.1",
+                "hyperf/testing": "^3.1",
+                "hyperf/utils": "^3.1",
+                "itsgoingd/clockwork": "^5.0",
+                "phpstan/phpstan": "^0.12",
+                "swoft/swoole-ide-helper": "dev-master",
+                "symfony/console": "^5.3",
+                "symfony/var-dumper": "^5.3"
+            },
+            "suggest": {
+                "ext-redis": "*"
+            },
+            "type": "library",
+            "extra": {
+                "hyperf": {
+                    "config": "Qbhy\\HyperfAuth\\ConfigProvider"
+                },
+                "hooks": {
+                    "pre-commit": [
+                        "echo committing as $(git config user.name)",
+                        "vendor/bin/php-cs-fixer fix .",
+                        "git add .",
+                        "composer test"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helper.php"
+                ],
+                "psr-4": {
+                    "Qbhy\\HyperfAuth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "hyperf 的 auth 组件",
+            "keywords": [
+                "hyperf",
+                "hyperf-auth",
+                "jwt-auth",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/qbhy/hyperf-auth/issues",
+                "source": "https://github.com/qbhy/hyperf-auth/tree/v3.1.2"
+            },
+            "time": "2024-01-11T04:45:43+00:00"
+        },
+        {
+            "name": "96qbhy/simple-jwt",
+            "version": "v1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qbhy/simple-jwt.git",
+                "reference": "5ed9564af7151f2cecc19249ffac4c697e5a7efb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qbhy/simple-jwt/zipball/5ed9564af7151f2cecc19249ffac4c697e5a7efb",
+                "reference": "5ed9564af7151f2cecc19249ffac4c697e5a7efb",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "^1.10",
+                "ext-json": ">=1.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "brainmaestro/composer-git-hooks": "^2.8",
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "hyperf/config": "^3.1",
+                "hyperf/context": "~3.1.0",
+                "phpunit/phpunit": "^10.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "hooks": {
+                    "pre-commit": [
+                        "echo committing as $(git config user.name)",
+                        "vendor/bin/php-cs-fixer fix .",
+                        "git add .",
+                        "composer test"
+                    ]
+                },
+                "hyperf": {
+                    "config": "Qbhy\\SimpleJwt\\Hyperf\\ConfigProvider"
+                },
+                "laravel": {
+                    "providers": [
+                        "Qbhy\\SimpleJwt\\Laravel\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Qbhy\\SimpleJwt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "96qbhy",
+                    "email": "96qbhy@gmail.com"
+                }
+            ],
+            "description": "简单的 jwt 实现",
+            "support": {
+                "issues": "https://github.com/qbhy/simple-jwt/issues",
+                "source": "https://github.com/qbhy/simple-jwt/tree/v1.5"
+            },
+            "time": "2023-12-05T08:17:09+00:00"
+        },
         {
             "name": "carbonphp/carbon-doctrine-types",
             "version": "3.2.0",
@@ -74,6 +223,105 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "doctrine/cache",
+            "version": "1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/cache.git",
+                "reference": "56cd022adb5514472cb144c087393c1821911d09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/56cd022adb5514472cb144c087393c1821911d09",
+                "reference": "56cd022adb5514472cb144c087393c1821911d09",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.1 || ^8.0"
+            },
+            "conflict": {
+                "doctrine/common": ">2.2,<2.4"
+            },
+            "require-dev": {
+                "alcaeus/mongo-php-adapter": "^1.1",
+                "cache/integration-tests": "dev-master",
+                "doctrine/coding-standard": "^9",
+                "mongodb/mongodb": "^1.1",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "predis/predis": "~1.0",
+                "psr/cache": "^1.0 || ^2.0 || ^3.0",
+                "symfony/cache": "^4.4 || ^5.4 || ^6",
+                "symfony/var-exporter": "^4.4 || ^5.4 || ^6"
+            },
+            "suggest": {
+                "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "PHP Doctrine Cache library is a popular cache implementation that supports many different drivers such as redis, memcache, apc, mongodb and others.",
+            "homepage": "https://www.doctrine-project.org/projects/cache.html",
+            "keywords": [
+                "abstraction",
+                "apcu",
+                "cache",
+                "caching",
+                "couchdb",
+                "memcached",
+                "php",
+                "redis",
+                "xcache"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/cache/issues",
+                "source": "https://github.com/doctrine/cache/tree/1.13.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fcache",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-05-20T20:06:54+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -6375,6 +6623,145 @@
                 }
             ],
             "time": "2024-07-20T21:52:34+00:00"
+        },
+        {
+            "name": "ydg/hyperf-admin-core",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/G-YDG/HyperfAdminCore.git",
+                "reference": "7d1cd95d47ea9ea6042c61f5141323813a7964ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/G-YDG/HyperfAdminCore/zipball/7d1cd95d47ea9ea6042c61f5141323813a7964ff",
+                "reference": "7d1cd95d47ea9ea6042c61f5141323813a7964ff",
+                "shasum": ""
+            },
+            "require": {
+                "hyperf/async-queue": "~3.1.0",
+                "hyperf/command": "~3.1.0",
+                "hyperf/config": "~3.1.0",
+                "hyperf/database": "~3.1.0",
+                "hyperf/db-connection": "~3.1.0",
+                "hyperf/di": "~3.1.0",
+                "hyperf/framework": "~3.1.0",
+                "hyperf/http-server": "~3.1.0",
+                "hyperf/logger": "~3.1.0",
+                "hyperf/model-cache": "~3.1.0",
+                "hyperf/paginator": "~3.1.0",
+                "hyperf/redis": "~3.1.0",
+                "hyperf/support": "~3.1.0",
+                "hyperf/validation": "~3.1.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "hyperf/devtool": "~3.1.0"
+            },
+            "suggest": {
+                "ext-json": "Required to use JSON.",
+                "ext-openssl": "Required to use HTTPS.",
+                "ext-pdo": "Required to use MySQL Client.",
+                "ext-pdo_mysql": "Required to use MySQL Client.",
+                "ext-redis": "Required to use Redis Client."
+            },
+            "type": "library",
+            "extra": {
+                "hyperf": {
+                    "config": "HyperfAdminCore\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "HyperfAdminCore\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "ydg",
+                    "email": "1028180290@qq.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "hyperf admin core code",
+            "keywords": [
+                "hyperf",
+                "hyperf admin",
+                "hyperf admin core",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/G-YDG/HyperfAdminCore/issues",
+                "source": "https://github.com/G-YDG/HyperfAdminCore/tree/v3.1.0"
+            },
+            "time": "2024-08-23T09:36:03+00:00"
+        },
+        {
+            "name": "ydg/hyperf-admin-generator",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/G-YDG/HyperfAdminGenerator.git",
+                "reference": "89ccba737e3cb0129e0d4a84bf322b83cc24fc10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/G-YDG/HyperfAdminGenerator/zipball/89ccba737e3cb0129e0d4a84bf322b83cc24fc10",
+                "reference": "89ccba737e3cb0129e0d4a84bf322b83cc24fc10",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0"
+            },
+            "suggest": {
+                "ext-json": "Required to use JSON.",
+                "ext-openssl": "Required to use HTTPS.",
+                "ext-pdo": "Required to use MySQL Client.",
+                "ext-pdo_mysql": "Required to use MySQL Client.",
+                "ext-redis": "Required to use Redis Client."
+            },
+            "type": "library",
+            "extra": {
+                "hyperf": {
+                    "config": "HyperfAdminGenerator\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "HyperfAdminGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "ydg",
+                    "email": "1028180290@qq.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "hyperf admin code generator",
+            "keywords": [
+                "hyperf",
+                "hyperf admin",
+                "hyperf admin generator",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/G-YDG/HyperfAdminGenerator/issues",
+                "source": "https://github.com/G-YDG/HyperfAdminGenerator/tree/v3.1.0"
+            },
+            "time": "2024-08-13T10:50:51+00:00"
         }
     ],
     "packages-dev": [
@@ -7711,16 +8098,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.29",
+            "version": "10.5.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "8e9e80872b4e8064401788ee8a32d40b4455318f"
+                "reference": "b15524febac0153876b4ba9aab3326c2ee94c897"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8e9e80872b4e8064401788ee8a32d40b4455318f",
-                "reference": "8e9e80872b4e8064401788ee8a32d40b4455318f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b15524febac0153876b4ba9aab3326c2ee94c897",
+                "reference": "b15524febac0153876b4ba9aab3326c2ee94c897",
                 "shasum": ""
             },
             "require": {
@@ -7741,7 +8128,7 @@
                 "phpunit/php-timer": "^6.0.0",
                 "sebastian/cli-parser": "^2.0.1",
                 "sebastian/code-unit": "^2.0.0",
-                "sebastian/comparator": "^5.0.1",
+                "sebastian/comparator": "^5.0.2",
                 "sebastian/diff": "^5.1.1",
                 "sebastian/environment": "^6.1.0",
                 "sebastian/exporter": "^5.1.2",
@@ -7792,7 +8179,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.29"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.30"
             },
             "funding": [
                 {
@@ -7808,7 +8195,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-30T11:08:00+00:00"
+            "time": "2024-08-13T06:09:37+00:00"
         },
         {
             "name": "react/cache",
@@ -8510,16 +8897,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "5.0.1",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "2db5010a484d53ebf536087a70b4a5423c102372"
+                "reference": "2d3e04c3b4c1e84a5e7382221ad8883c8fbc4f53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2db5010a484d53ebf536087a70b4a5423c102372",
-                "reference": "2db5010a484d53ebf536087a70b4a5423c102372",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2d3e04c3b4c1e84a5e7382221ad8883c8fbc4f53",
+                "reference": "2d3e04c3b4c1e84a5e7382221ad8883c8fbc4f53",
                 "shasum": ""
             },
             "require": {
@@ -8530,7 +8917,7 @@
                 "sebastian/exporter": "^5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^10.3"
+                "phpunit/phpunit": "^10.4"
             },
             "type": "library",
             "extra": {
@@ -8575,7 +8962,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/5.0.1"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/5.0.2"
             },
             "funding": [
                 {
@@ -8583,7 +8970,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-14T13:18:12+00:00"
+            "time": "2024-08-12T06:03:08+00:00"
         },
         {
             "name": "sebastian/complexity",

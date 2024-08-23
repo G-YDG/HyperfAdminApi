@@ -9,5 +9,7 @@ declare(strict_types=1);
  */
 return [
     'http' => [
+        Hyperf\Validation\Middleware\ValidationMiddleware::class,
+        App\Common\Middleware\CorsMiddleware::class,
     ],
 ];

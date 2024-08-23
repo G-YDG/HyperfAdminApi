@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Common\Command;
+
+use Hyperf\Command\Annotation\Command;
+use Hyperf\Command\Command as HyperfCommand;
+use Hyperf\Database\ConnectionResolverInterface;
+use Hyperf\Stringable\Str;
+use HyperfAdminGenerator\ControllerGenerator;
+use HyperfAdminGenerator\MapperGenerator;
+use HyperfAdminGenerator\RequestGenerator;
+use HyperfAdminGenerator\ServiceGenerator;
+use Qbhy\HyperfAuth\Annotation\Auth;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+
+#[Command]
+class TemplateCommand extends HyperfCommand
+{
+    public function __construct()
+    {
+        parent::__construct('gen-template');
+
+        $this->setDescription('Generate code template by table');
+    }
+
+    public function getArguments()
+    {
+        return [
+            ['module', InputArgument::REQUIRED, 'The module that you want the code file to be generated.'],
+            ['table', InputArgument::REQUIRED, 'Which table you want to generate code template.'],
+        ];
+    }
+
+    public function getOptions()
+    {
+        return [
+            ['pool', 'p', InputOption::VALUE_OPTIONAL, 'Which connection pool you want the Model use.', 'default'],
+        ];
+    }
+
+    public function handle()
+    {
+        $module = $this->input->getArgument('module');
+        $table = $this->input->getArgument('table');
+
+        $this->modelGenerator();
+
+        (new MapperGenerator($module, $table))->generator();
+
+        (new MapperGenerator($module, $table))->generator();
+
+        (new ServiceGenerator($module, $table))->generator();
+
+        $columns = container()
+            ->get(ConnectionResolverInterface::class)
+            ->connection()
+            ->getSchemaBuilder()
+            ->getColumnTypeListing($table);
+        (new RequestGenerator($module, $table, $columns))->generator();
+
+        (new ControllerGenerator($module, $table, Auth::class))->generator();
+    }
+
+    protected function modelGenerator(): void
+    {
+        $this->call('gen:model', [
+            'table' => $this->input->getArgument('table'),
+            '--pool' => $this->input->getOption('pool'),
+            '--path' => $this->getModelPath($this->input->getArgument('module')),
+        ]);
+    }
+
+    protected function getModelPath($module): string
+    {
+        return 'app/' . Str::studly(trim($module)) . '/Model';
+    }
+}

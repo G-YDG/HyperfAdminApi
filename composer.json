@@ -13,6 +13,7 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=8.1",
+        "96qbhy/hyperf-auth": "^3.1",
         "hyperf/async-queue": "~3.1.0",
         "hyperf/cache": "~3.1.0",
         "hyperf/command": "~3.1.0",
@@ -34,7 +35,9 @@
         "hyperf/redis": "~3.1.0",
         "hyperf/signal": "~3.1",
         "hyperf/support": "~3.1.0",
-        "hyperf/validation": "~3.1.0"
+        "hyperf/validation": "~3.1.0",
+        "ydg/hyperf-admin-core": "^3.1",
+        "ydg/hyperf-admin-generator": "^3.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -56,7 +59,8 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Common/Helper/function.php"
+            "app/Common/Helper/function.php",
+            "app/System/Helper/function.php"
         ]
     },
     "autoload-dev": {

@@ -7,5 +7,10 @@ declare(strict_types=1);
  *  * @link     https://github.com/G-YDG/HyperfAdminApi
  *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
+
+use App\System\Interfaces\UserServiceInterface;
+use App\System\Service\Dependencies\UserService;
+
 return [
+    UserServiceInterface::class => UserService::class,
 ];
