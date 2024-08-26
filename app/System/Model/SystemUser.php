@@ -88,16 +88,6 @@ class SystemUser extends Model implements Authenticatable
         return $this->belongsToMany(SystemRole::class, 'system_user_role', 'system_user_id', 'system_role_id');
     }
 
-    public function getRole()
-    {
-        $this->setAttribute('role', !empty($this->roles) ? $this->roles[0] : []);
-    }
-
-    public function getRoleId()
-    {
-        $this->setAttribute('role_id', !empty($this->roles) ? $this->roles[0]->id : null);
-    }
-
     /**
      * 密码加密
      * @param $value
