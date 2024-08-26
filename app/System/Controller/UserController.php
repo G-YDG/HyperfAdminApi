@@ -18,7 +18,7 @@ use Psr\Http\Message\ResponseInterface;
 use Qbhy\HyperfAuth\Annotation\Auth;
 
 #[Controller(prefix: 'system/user')]
-class SystemUserController extends AbstractController
+class UserController extends AbstractController
 {
     #[Inject]
     protected SystemUserService $service;
@@ -62,6 +62,31 @@ class SystemUserController extends AbstractController
     public function getInfo(): ResponseInterface
     {
         return $this->success($this->service->getInfo());
+    }
+
+    /**
+     * 更改用户资料，含修改头像
+     * @param SystemUserRequest $request
+     * @return ResponseInterface
+     */
+    #[PostMapping("updateInfo"), Scene(scene: 'modifyUserInfo'), Auth]
+    public function updateInfo(SystemUserRequest $request): ResponseInterface
+    {
+        return $this->service->updateInfo(
+            array_merge($this->request->all(), ['id' => auth()->id()])
+        ) ? $this->success('保存成功') : $this->error();
+    }
+
+
+    /**
+     * 修改密码
+     * @param SystemUserRequest $request
+     * @return ResponseInterface
+     */
+    #[PostMapping("modifyPassword"), Scene(scene: 'modifyPassword')]
+    public function modifyPassword(SystemUserRequest $request): ResponseInterface
+    {
+        return $this->service->modifyPassword($request->validated()) ? $this->success() : $this->error();
     }
 
     /**

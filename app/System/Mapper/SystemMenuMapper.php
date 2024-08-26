@@ -78,7 +78,7 @@ class SystemMenuMapper extends AbstractMapper
             ->where('status', $this->model::ENABLE)
             ->orderBy('sort', 'desc');
 
-        if (isSuperAdmin()) {
+        if (!isSuperAdmin()) {
             $roleData = container()->get(SystemRoleMapper::class)->getMenuIdsByRoleIds(
                 SystemUser::find(auth()->id(), ['id'])->roles()->pluck('id')->toArray()
             );

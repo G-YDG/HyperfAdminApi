@@ -8,9 +8,7 @@ declare(strict_types=1);
  *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
 
-use App\System\Interfaces\UserServiceInterface;
-use App\System\Service\Dependencies\UserService;
-
 return [
-    UserServiceInterface::class => UserService::class,
+    App\System\Interfaces\UserServiceInterface::class => App\System\Service\Dependencies\UserService::class,
+    App\System\Interfaces\FileServiceInterface::class => App\System\Service\Dependencies\FileService::class,
 ];

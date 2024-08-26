@@ -98,10 +98,11 @@ class SystemUserService extends AbstractService
     public function getInfo(): array
     {
         if (($uid = auth()->id())) {
-            $user = $this->mapper->getModel()->find($uid);
+            $user = $this->mapper->getModel()->with(['roles:id,name,code,status'])->find($uid);
             $user->addHidden('deleted_at', 'password');
-            $data['user'] = $user->toArray();
-            return $data;
+            $user = $user->toArray();
+            $user['roles'] = array_column($user['roles'], 'code');
+            return $user;
         }
         throw new AppException('用户信息无法获取', 500);
     }
