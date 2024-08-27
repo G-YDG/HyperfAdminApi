@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fb5a4df5c26f2f087c6443b6fe9585b",
+    "content-hash": "c0ec51088bf83ce3db48e74916f5389c",
     "packages": [
         {
             "name": "96qbhy/hyperf-auth",
@@ -6962,15 +6962,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/G-YDG/HyperfAdminGenerator.git",
-                "reference": "89ccba737e3cb0129e0d4a84bf322b83cc24fc10"
+                "reference": "2129f40d327c39cf09073bcf13c1e560aa4a1417"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/G-YDG/HyperfAdminGenerator/zipball/89ccba737e3cb0129e0d4a84bf322b83cc24fc10",
-                "reference": "89ccba737e3cb0129e0d4a84bf322b83cc24fc10",
+                "url": "https://api.github.com/repos/G-YDG/HyperfAdminGenerator/zipball/2129f40d327c39cf09073bcf13c1e560aa4a1417",
+                "reference": "2129f40d327c39cf09073bcf13c1e560aa4a1417",
                 "shasum": ""
             },
             "require": {
+                "hyperf/database": "^3.1",
+                "hyperf/support": "^3.1",
                 "php": ">=8.1"
             },
             "require-dev": {
@@ -7016,7 +7018,7 @@
                 "issues": "https://github.com/G-YDG/HyperfAdminGenerator/issues",
                 "source": "https://github.com/G-YDG/HyperfAdminGenerator/tree/v3.1.0"
             },
-            "time": "2024-08-13T10:50:51+00:00"
+            "time": "2024-08-27T02:57:19+00:00"
         }
     ],
     "packages-dev": [

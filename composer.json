@@ -37,7 +37,7 @@
         "hyperf/signal": "~3.1",
         "hyperf/support": "~3.1.0",
         "hyperf/validation": "~3.1.0",
-        "ydg/hyperf-admin-core": "^3.1",
+        "ydg/hyperf-admin-core": "~3.1",
         "ydg/hyperf-admin-generator": "^3.1"
     },
     "require-dev": {

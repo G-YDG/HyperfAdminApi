@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\System\Controller;
 
-use App\System\Interfaces\UserServiceInterface;
 use App\System\Request\SystemUserRequest;
 use App\System\Service\SystemUserService;
-use App\System\Vo\UserServiceVo;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\GetMapping;
@@ -17,48 +15,27 @@ use HyperfAdminCore\Abstracts\AbstractController;
 use Psr\Http\Message\ResponseInterface;
 use Qbhy\HyperfAuth\Annotation\Auth;
 
-#[Controller(prefix: 'system/user')]
+#[Controller(prefix: 'system/user'), Auth]
 class UserController extends AbstractController
 {
     #[Inject]
     protected SystemUserService $service;
 
-    #[Inject]
-    protected UserServiceInterface $userService;
-
     /**
-     * 用户登录
-     * @param SystemUserRequest $request
+     * 用户菜单
      * @return ResponseInterface
      */
-    #[PostMapping("login"), Scene(scene: 'login')]
-    public function login(SystemUserRequest $request): ResponseInterface
+    #[GetMapping("menu")]
+    public function menu(): ResponseInterface
     {
-        $requestData = $request->validated();
-
-        $vo = new UserServiceVo();
-        $vo->setUsername($requestData['username']);
-        $vo->setPassword($requestData['password']);
-
-        return $this->success(['token' => $this->userService->login($vo)]);
-    }
-
-    /**
-     * 用户登出
-     * @return ResponseInterface
-     */
-    #[PostMapping("logout"), Auth]
-    public function logout(): ResponseInterface
-    {
-        $this->userService->logout();
-        return $this->success();
+        return $this->success($this->service->getMenus());
     }
 
     /**
      * 用户信息
      * @return ResponseInterface
      */
-    #[GetMapping("getInfo"), Auth]
+    #[GetMapping("getInfo")]
     public function getInfo(): ResponseInterface
     {
         return $this->success($this->service->getInfo());
@@ -69,7 +46,7 @@ class UserController extends AbstractController
      * @param SystemUserRequest $request
      * @return ResponseInterface
      */
-    #[PostMapping("updateInfo"), Scene(scene: 'modifyUserInfo'), Auth]
+    #[PostMapping("updateInfo"), Scene(scene: 'modifyUserInfo')]
     public function updateInfo(SystemUserRequest $request): ResponseInterface
     {
         return $this->service->updateInfo(
@@ -90,20 +67,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * 用户菜单
-     * @return ResponseInterface
-     */
-    #[GetMapping("menu"), Auth]
-    public function menu(): ResponseInterface
-    {
-        return $this->success($this->service->getMenus());
-    }
-
-    /**
      * 分页列表
      * @return ResponseInterface
      */
-    #[GetMapping("index"), Auth]
+    #[GetMapping("index")]
     public function index(): ResponseInterface
     {
         return $this->success($this->service->getPageList($this->request->all()));
@@ -114,7 +81,7 @@ class UserController extends AbstractController
      * @param SystemUserRequest $request
      * @return ResponseInterface
      */
-    #[PostMapping("save"), Scene(scene: 'save'), Auth]
+    #[PostMapping("save"), Scene(scene: 'save')]
     public function save(SystemUserRequest $request): ResponseInterface
     {
         return $this->success(['id' => $this->service->save($request->all())]);
@@ -125,7 +92,7 @@ class UserController extends AbstractController
      * @param int $id
      * @return ResponseInterface
      */
-    #[GetMapping("read/{id}"), Auth]
+    #[GetMapping("read/{id}")]
     public function read(int $id): ResponseInterface
     {
         return $this->success($this->service->read($id));
@@ -137,7 +104,7 @@ class UserController extends AbstractController
      * @param SystemUserRequest $request
      * @return ResponseInterface
      */
-    #[PostMapping("update/{id}"), Scene(scene: 'update'), Auth]
+    #[PostMapping("update/{id}"), Scene(scene: 'update')]
     public function update(int $id, SystemUserRequest $request): ResponseInterface
     {
         return $this->service->update($id, $request->all()) ? $this->success() : $this->error();
@@ -147,7 +114,7 @@ class UserController extends AbstractController
      * 单个或批量删除
      * @return ResponseInterface
      */
-    #[PostMapping("delete"), Auth]
+    #[PostMapping("delete")]
     public function delete(): ResponseInterface
     {
         return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
