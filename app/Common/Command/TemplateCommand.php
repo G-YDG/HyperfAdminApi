@@ -48,18 +48,11 @@ class TemplateCommand extends HyperfCommand
 
         (new MapperGenerator($module, $table))->generator();
 
-        (new MapperGenerator($module, $table))->generator();
-
         (new ServiceGenerator($module, $table))->generator();
 
-        $columns = container()
-            ->get(ConnectionResolverInterface::class)
-            ->connection()
-            ->getSchemaBuilder()
-            ->getColumnTypeListing($table);
-        (new RequestGenerator($module, $table, $columns))->generator();
+        (new RequestGenerator($module, $table, ['created_at', 'updated_at', 'deleted_at']))->generator();
 
-        (new ControllerGenerator($module, $table, Auth::class))->generator();
+        (new ControllerGenerator($module, $table, Auth::class, true))->generator();
     }
 
     protected function modelGenerator(): void
