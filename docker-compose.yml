@@ -1,8 +1,8 @@
 version: '3'
 services:
-  hyperf-skeleton:
-    container_name: hyperf-skeleton
-    image: hyperf-skeleton
+  hyperf-admin:
+    container_name: hyperf-admin
+    image: hyperf-admin
     build:
       context: .
     volumes:
@@ -16,4 +16,4 @@ services:
 
 networks:
   default:
-    name: hyperf-skeleton
+    name: hyperf-admin
