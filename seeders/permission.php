@@ -34,12 +34,15 @@ class Permission extends Seeder
         $menuData = [
             [1000, 0, '0', 'menu.dashboard', 'Dashboard', 'icon-dashboard', 'dashboard', '', NULL, 1, 1, 100, $datetime, $datetime, NULL, NULL],
             [1001, 1000, '0,1000', 'menu.dashboard.workplace', 'Workplace', 'icon-computer', 'workplace', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
-            [1002, 1000, '0,1000', 'menu.dashboard.userInfo', 'UserInfo', 'icon-user', 'userInfo', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
+            [1002, 1000, '0,1000', 'menu.dashboard.userInfo', 'UserInfo', 'icon-user', 'userInfo', '', NULL, 1, 2, 0, $datetime, $datetime, NULL, NULL],
 
             [1100, 0, '0', 'menu.system', 'System', 'icon-lock', 'system', '', NULL, 1, 1, 99, $datetime, $datetime, NULL, NULL],
             [1101, 1100, '0,1100', 'menu.system.user', 'SystemUser', 'icon-user-group', 'user', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
             [1102, 1100, '0,1100', 'menu.system.role', 'SystemRole', 'icon-user-add', 'role', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
             [1103, 1100, '0,1100', 'menu.system.menu', 'SystemMenu', 'icon-menu', 'menu', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
+
+            [1200, 0, '0', 'menu.tools', 'Tools', 'icon-tool', 'tools', '', NULL, 1, 1, 98, $datetime, $datetime, NULL, NULL],
+            [1201, 1200, '0,1200', 'menu.tools.generateCode', 'ToolsGenerateCode', 'icon-code', 'generateCode', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
         ];
 
         $roleMenuData = [];

@@ -28,3 +28,33 @@ docker-compose exec hyperf-admin composer install && docker-compose restart
 ```bash
 docker-compose exec hyperf-admin php bin/hyperf.php gen:auth-env
 ```
+
+初始化迁移
+
+```bash
+docker-compose exec hyperf-admin php bin/hyperf.php migrate:install
+```
+
+执行数据迁移
+
+```bash
+docker-compose exec hyperf-admin php bin/hyperf.php migrate
+```
+
+执行数据填充
+
+```bash
+docker-compose exec hyperf-admin php bin/hyperf.php db:seed
+```
+
+重启容器
+
+```bash
+docker-compose restart
+```
+
+查看容器日志
+
+```bash
+docker-compose logs -f -t --tail=100
+```
