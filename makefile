@@ -1,6 +1,6 @@
 .PHONY: up down restart log bash ps
 
-app-name=hyperf-skeleton
+app-name=hyperf-admin
 
 up:
 	docker-compose up -d
