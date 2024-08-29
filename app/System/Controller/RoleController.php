@@ -13,8 +13,9 @@ use Hyperf\Validation\Annotation\Scene;
 use Psr\Http\Message\ResponseInterface;
 use App\System\Service\SystemRoleService;
 use App\System\Request\SystemRoleRequest;
+use Qbhy\HyperfAuth\Annotation\Auth;
 
-#[Controller(prefix: 'system/role')]
+#[Controller(prefix: 'system/role'), Auth]
 class RoleController extends AbstractController
 {
     #[Inject]

@@ -11,8 +11,9 @@ use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
 use HyperfAdminCore\Abstracts\AbstractController;
 use Psr\Http\Message\ResponseInterface;
+use Qbhy\HyperfAuth\Annotation\Auth;
 
-#[Controller(prefix: 'system/file')]
+#[Controller(prefix: 'system/file'), Auth]
 class FileController extends AbstractController
 {
     #[Inject]

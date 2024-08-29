@@ -15,8 +15,9 @@ use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use App\System\Service\SystemMenuService;
 use App\System\Request\SystemMenuRequest;
+use Qbhy\HyperfAuth\Annotation\Auth;
 
-#[Controller(prefix: 'system/menu')]
+#[Controller(prefix: 'system/menu'), Auth]
 class MenuController extends AbstractController
 {
     #[Inject]
