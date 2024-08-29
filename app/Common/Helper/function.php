@@ -188,3 +188,21 @@ if (! function_exists('format_size')) {
         return round($size, 2) . $units[$index];
     }
 }
+
+if (! function_exists('makeDir')) {
+    /**
+     * 判断文件夹是否存在，不存在则创建.
+     */
+    function makeDir($dir, $mode = 0700): bool
+    {
+        if (is_dir($dir) || @mkdir($dir, $mode)) {
+            return true;
+        }
+
+        if (!mkdir(dirname($dir), $mode)) {
+            return false;
+        }
+
+        return @mkdir($dir, $mode);
+    }
+}

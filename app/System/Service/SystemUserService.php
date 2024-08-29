@@ -6,6 +6,7 @@ namespace App\System\Service;
 
 use App\Common\Exception\AppException;
 use App\Common\Exception\UserException;
+use App\Common\Helper\SpreadsheetExport;
 use App\System\Mapper\SystemUserMapper;
 use HyperfAdminCore\Abstracts\AbstractService;
 
@@ -167,5 +168,24 @@ class SystemUserService extends AbstractService
     public function modifyPassword(array $params): bool
     {
         return $this->mapper->initUserPassword((int)auth()->id(), $params['newPassword']);
+    }
+
+    public function export(): array
+    {
+        $data = $this->getList([
+            'select' => 'id,username,created_at'
+        ]);
+
+        array_walk($data, function (&$datum) {
+            $datum = [
+                $datum['id'],
+                $datum['username'],
+                $datum['created_at'],
+            ];
+        });
+
+        return make(SpreadsheetExport::class)
+            ->fillWorksheet('用户信息', ['ID', '用户名', '创建时间'], $data)
+            ->writeToLocal('用户信息表格');
     }
 }

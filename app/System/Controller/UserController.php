@@ -119,4 +119,15 @@ class UserController extends AbstractController
     {
         return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
+
+    /**
+     * 导出
+     * @return ResponseInterface
+     */
+    #[GetMapping("export")]
+    public function export(): ResponseInterface
+    {
+        list($filepath, $filename) = $this->service->export();
+        return $this->_download($filepath, $filename);
+    }
 }
