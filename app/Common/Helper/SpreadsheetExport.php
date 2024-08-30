@@ -114,24 +114,37 @@ class SpreadsheetExport
     }
 
     /**
-     * 保存到服务器本地.
+     * 导出文件.
+     *
      * @param $filename
+     * @param $filepath
      * @return array
      */
-    public function writeToLocal($filename): array
+    public function exportFile($filename, $filepath = null): array
     {
-        makeDir($this->getLocalFileBasePath());
+        $filepath = $filepath ?? $this->getLocalFilePath();
+        makeDir($filepath);
 
         $fileName = $this->getFileName($filename);
-        $filepath = $this->getLocalFilePath($fileName);
+        $filePath = $this->getFilePath($fileName, $filepath);
 
         $writer = @IOFactory::createWriter($this->spreadsheet, $this->getFileType());
-        $writer->save($filepath);
+        $writer->save($filePath);
 
         $this->spreadsheet->disconnectWorksheets();
         unset($this->spreadsheet);
 
-        return [$filepath, $fileName];
+        return [$filePath, $fileName];
+    }
+
+    /**
+     * 获取本地文件路径.
+     *
+     * @return string
+     */
+    protected function getLocalFilepath(): string
+    {
+        return config('spreadsheet.local_file_path');
     }
 
     /**
@@ -153,6 +166,12 @@ class SpreadsheetExport
         return $this->fileType;
     }
 
+    /**
+     * 设置文件类型
+     *
+     * @param string $fileType
+     * @return $this
+     */
     public function setFileType(string $fileType): static
     {
         $this->fileType = $fileType;
@@ -161,21 +180,14 @@ class SpreadsheetExport
     }
 
     /**
-     * 获取保存到本地的excel路径.
-     * @return string
-     */
-    protected function getLocalFileBasePath(): string
-    {
-        return config('spreadsheet.local_file_path');
-    }
-
-    /**
-     * 获取保存到本地的excel地址.
+     * 获取文件路径.
+     *
      * @param $fileName
+     * @param $filepath
      * @return string
      */
-    protected function getLocalFilePath($fileName): string
+    protected function getFilePath($fileName, $filepath = null): string
     {
-        return $this->getLocalFileBasePath() . DIRECTORY_SEPARATOR . $fileName;;
+        return $filepath . DIRECTORY_SEPARATOR . $fileName;
     }
 }

@@ -6,7 +6,6 @@ namespace App\System\Service;
 
 use App\Common\Exception\AppException;
 use App\Common\Exception\UserException;
-use App\Common\Helper\SpreadsheetExport;
 use App\System\Mapper\SystemUserMapper;
 use HyperfAdminCore\Abstracts\AbstractService;
 
@@ -32,16 +31,16 @@ class SystemUserService extends AbstractService
     }
 
     /**
+     * 更新用户信息
+     * @param int $id
      * @param array $data
-     * @return int
+     * @return bool
      */
-    public function save(array $data): int
+    public function update(int $id, array $data): bool
     {
-        if ($this->mapper->existsByUsername($data['username'])) {
-            throw new UserException('管理员用户名已存在');
-        } else {
-            return $this->mapper->save($this->handleData($data));
-        }
+        if (isset($data['username'])) unset($data['username']);
+        if (isset($data['password'])) unset($data['password']);
+        return $this->mapper->update($id, $this->handleData($data));
     }
 
     /**
@@ -61,19 +60,6 @@ class SystemUserService extends AbstractService
             $data['role_ids'] = explode(',', (string)$data['role_ids']);
         }
         return $data;
-    }
-
-    /**
-     * 更新用户信息
-     * @param int $id
-     * @param array $data
-     * @return bool
-     */
-    public function update(int $id, array $data): bool
-    {
-        if (isset($data['username'])) unset($data['username']);
-        if (isset($data['password'])) unset($data['password']);
-        return $this->mapper->update($id, $this->handleData($data));
     }
 
     /**
@@ -161,6 +147,19 @@ class SystemUserService extends AbstractService
     }
 
     /**
+     * @param array $data
+     * @return int
+     */
+    public function save(array $data): int
+    {
+        if ($this->mapper->existsByUsername($data['username'])) {
+            throw new UserException('管理员用户名已存在');
+        } else {
+            return $this->mapper->save($this->handleData($data));
+        }
+    }
+
+    /**
      * 用户修改密码
      * @param array $params
      * @return bool
@@ -168,24 +167,5 @@ class SystemUserService extends AbstractService
     public function modifyPassword(array $params): bool
     {
         return $this->mapper->initUserPassword((int)auth()->id(), $params['newPassword']);
-    }
-
-    public function export(): array
-    {
-        $data = $this->getList([
-            'select' => 'id,username,created_at'
-        ]);
-
-        array_walk($data, function (&$datum) {
-            $datum = [
-                $datum['id'],
-                $datum['username'],
-                $datum['created_at'],
-            ];
-        });
-
-        return make(SpreadsheetExport::class)
-            ->fillWorksheet('用户信息', ['ID', '用户名', '创建时间'], $data)
-            ->writeToLocal('用户信息表格');
     }
 }
