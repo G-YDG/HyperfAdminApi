@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\System\Controller;
 
+use App\Common\Helper\SpreadsheetExport;
 use App\System\Request\SystemUserRequest;
 use App\System\Service\SystemUserService;
 use Hyperf\Di\Annotation\Inject;
@@ -119,4 +120,30 @@ class UserController extends AbstractController
     {
         return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
+
+    /**
+     * @return ResponseInterface
+     */
+    #[GetMapping("export")]
+    public function export(): ResponseInterface
+    {
+        $data = $this->service->getList(array_merge($this->request->all(), [
+            'select' => 'id,username,created_at'
+        ]));
+
+        array_walk($data, function (&$datum) {
+            $datum = [
+                $datum['id'],
+                $datum['username'],
+                $datum['created_at'],
+            ];
+        });
+
+        list($filepath, $filename) = make(SpreadsheetExport::class)
+            ->fillWorksheet('用户信息', ['ID', '用户名', '创建时间'], $data)
+            ->exportFile('用户信息');
+
+        return $this->_download($filepath, $filename);
+    }
+
 }
