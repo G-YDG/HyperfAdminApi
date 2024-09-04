@@ -1,7 +1,12 @@
 <?php
 
 declare(strict_types=1);
-
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 use App\System\Model\SystemMenu;
 use App\System\Model\SystemRole;
 use App\System\Model\SystemRoleMenu;
@@ -15,8 +20,6 @@ class Permission extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -32,17 +35,17 @@ class Permission extends Seeder
         Db::table('system_user_role')->truncate();
 
         $menuData = [
-            [1000, 0, '0', 'menu.dashboard', 'Dashboard', 'icon-dashboard', 'dashboard', '', NULL, 1, 1, 100, $datetime, $datetime, NULL, NULL],
-            [1001, 1000, '0,1000', 'menu.dashboard.workplace', 'Workplace', 'icon-computer', 'workplace', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
-            [1002, 1000, '0,1000', 'menu.dashboard.userInfo', 'UserInfo', 'icon-user', 'userInfo', '', NULL, 1, 2, 0, $datetime, $datetime, NULL, NULL],
+            [1000, 0, '0', 'menu.dashboard', 'Dashboard', 'icon-dashboard', 'dashboard', '', null, 1, 1, 100, $datetime, $datetime, null, null],
+            [1001, 1000, '0,1000', 'menu.dashboard.workplace', 'Workplace', 'icon-computer', 'workplace', '', null, 1, 1, 0, $datetime, $datetime, null, null],
+            [1002, 1000, '0,1000', 'menu.dashboard.userInfo', 'UserInfo', 'icon-user', 'userInfo', '', null, 1, 2, 0, $datetime, $datetime, null, null],
 
-            [1100, 0, '0', 'menu.system', 'System', 'icon-lock', 'system', '', NULL, 1, 1, 99, $datetime, $datetime, NULL, NULL],
-            [1101, 1100, '0,1100', 'menu.system.user', 'SystemUser', 'icon-user-group', 'user', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
-            [1102, 1100, '0,1100', 'menu.system.role', 'SystemRole', 'icon-user-add', 'role', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
-            [1103, 1100, '0,1100', 'menu.system.menu', 'SystemMenu', 'icon-menu', 'menu', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
+            [1100, 0, '0', 'menu.system', 'System', 'icon-lock', 'system', '', null, 1, 1, 99, $datetime, $datetime, null, null],
+            [1101, 1100, '0,1100', 'menu.system.user', 'SystemUser', 'icon-user-group', 'user', '', null, 1, 1, 0, $datetime, $datetime, null, null],
+            [1102, 1100, '0,1100', 'menu.system.role', 'SystemRole', 'icon-user-add', 'role', '', null, 1, 1, 0, $datetime, $datetime, null, null],
+            [1103, 1100, '0,1100', 'menu.system.menu', 'SystemMenu', 'icon-menu', 'menu', '', null, 1, 1, 0, $datetime, $datetime, null, null],
 
-            [1200, 0, '0', 'menu.tools', 'Tools', 'icon-tool', 'tools', '', NULL, 1, 1, 98, $datetime, $datetime, NULL, NULL],
-            [1201, 1200, '0,1200', 'menu.tools.generateCode', 'ToolsGenerateCode', 'icon-code', 'generateCode', '', NULL, 1, 1, 0, $datetime, $datetime, NULL, NULL],
+            [1200, 0, '0', 'menu.tools', 'Tools', 'icon-tool', 'tools', '', null, 1, 1, 98, $datetime, $datetime, null, null],
+            [1201, 1200, '0,1200', 'menu.tools.generateCode', 'ToolsGenerateCode', 'icon-code', 'generateCode', '', null, 1, 1, 0, $datetime, $datetime, null, null],
         ];
 
         $roleMenuData = [];
@@ -54,14 +57,14 @@ class Permission extends Seeder
             SystemMenu::class => $menuData,
             SystemRoleMenu::class => $roleMenuData,
             SystemRole::class => [
-                [$superAdminRoleId, '超级管理员', 'SuperAdmin', 1, 0, $datetime, $datetime, NULL],
+                [$superAdminRoleId, '超级管理员', 'SuperAdmin', 1, 0, $datetime, $datetime, null],
             ],
             SystemUser::class => [
-                [$superAdminUserId, 'admin', password_hash('123456', PASSWORD_DEFAULT), '超级管理员', NULL, NULL, '', 1, NULL, NULL, $datetime, $datetime, NULL],
+                [$superAdminUserId, 'admin', password_hash('123456', PASSWORD_DEFAULT), '超级管理员', null, null, '', 1, null, null, $datetime, $datetime, null],
             ],
             SystemUserRole::class => [
-                [$superAdminUserId, $superAdminRoleId]
-            ]
+                [$superAdminUserId, $superAdminRoleId],
+            ],
         ];
 
         foreach ($data as $modelClass => $modelData) {
@@ -79,18 +82,18 @@ class Permission extends Seeder
             foreach ($datum as &$val) {
                 if (is_string($val)) {
                     $val = "'" . $val . "'";
-                } elseif ($val === NULL) {
+                } elseif ($val === null) {
                     $val = 'NULL';
                 }
             }
-            $sqlData[] = "INSERT INTO `{$table_name}` VALUES (" . implode(',', $datum) . ")";
+            $sqlData[] = "INSERT INTO `{$table_name}` VALUES (" . implode(',', $datum) . ')';
         }
         return $sqlData;
     }
 
     protected function getTableName($model): string
     {
-        /**
+        /*
          * @var Model $model
          */
         return env('DB_PREFIX') . $model::getModel()->getTable();

@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Controller;
 
@@ -22,11 +28,9 @@ class HomeController extends AbstractController
     protected UserServiceInterface $userService;
 
     /**
-     * 用户登录
-     * @param SystemUserRequest $request
-     * @return ResponseInterface
+     * 用户登录.
      */
-    #[PostMapping("login"), Scene(scene: 'login')]
+    #[PostMapping('login'), Scene(scene: 'login')]
     public function login(SystemUserRequest $request): ResponseInterface
     {
         $requestData = $request->validated();
@@ -39,10 +43,9 @@ class HomeController extends AbstractController
     }
 
     /**
-     * 用户登出
-     * @return ResponseInterface
+     * 用户登出.
      */
-    #[PostMapping("logout"), Auth]
+    #[PostMapping('logout'), Auth]
     public function logout(): ResponseInterface
     {
         $this->userService->logout();

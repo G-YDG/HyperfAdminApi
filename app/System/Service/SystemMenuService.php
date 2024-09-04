@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -18,10 +24,6 @@ class SystemMenuService extends AbstractService
         $this->mapper = $mapper;
     }
 
-    /**
-     * @param array|null $params
-     * @return array
-     */
     public function getTreeList(?array $params = null): array
     {
         $params = array_merge(['orderBy' => 'sort', 'orderType' => 'desc'], $params);
@@ -29,8 +31,7 @@ class SystemMenuService extends AbstractService
     }
 
     /**
-     * 获取前端选择树
-     * @return array
+     * 获取前端选择树.
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -38,5 +39,4 @@ class SystemMenuService extends AbstractService
     {
         return $this->mapper->getSelectTree();
     }
-
 }

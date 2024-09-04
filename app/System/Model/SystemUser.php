@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Model;
 
@@ -28,15 +34,16 @@ use Qbhy\HyperfAuth\Authenticatable;
  */
 class SystemUser extends Model implements Authenticatable
 {
-    use AuthAbility, SoftDeletes;
+    use AuthAbility;
+    use SoftDeletes;
 
     /**
-     * 状态：正常
+     * 状态：正常.
      */
     public const USER_NORMAL = 1;
 
     /**
-     * 状态：禁用
+     * 状态：禁用.
      */
     public const USER_BAN = 2;
 
@@ -70,9 +77,8 @@ class SystemUser extends Model implements Authenticatable
 
     /**
      * 验证密码
-     * @param $password
-     * @param $hash
-     * @return bool
+     * @param mixed $password
+     * @param mixed $hash
      */
     public static function passwordVerify($password, $hash): bool
     {
@@ -80,8 +86,7 @@ class SystemUser extends Model implements Authenticatable
     }
 
     /**
-     * 通过中间表关联角色
-     * @return BelongsToMany
+     * 通过中间表关联角色.
      */
     public function roles(): BelongsToMany
     {
@@ -89,9 +94,8 @@ class SystemUser extends Model implements Authenticatable
     }
 
     /**
-     * 密码加密
-     * @param $value
-     * @return void
+     * 密码加密.
+     * @param mixed $value
      */
     public function setPasswordAttribute($value): void
     {

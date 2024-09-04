@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\Tools\Service;
 
@@ -11,6 +17,7 @@ use HyperfAdminGenerator\MapperGenerator;
 use HyperfAdminGenerator\RequestGenerator;
 use HyperfAdminGenerator\ServiceGenerator;
 use Qbhy\HyperfAuth\Annotation\Auth;
+use Throwable;
 
 class GenerateCodeService
 {
@@ -18,7 +25,7 @@ class GenerateCodeService
     {
         try {
             return Db::connection($params['pool'] ?? 'default')->select('SHOW TABLE STATUS');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             throw new AppException($e->getMessage(), 500);
         }
     }
@@ -29,7 +36,7 @@ class GenerateCodeService
             'name' => 'controller',
             'label' => 'Controller.php',
             'lang' => 'php',
-            'code' => (new ControllerGenerator($params['module'], $params['name'], Auth::class, true))->preview()
+            'code' => (new ControllerGenerator($params['module'], $params['name'], Auth::class, true))->preview(),
         ];
 
         $result[] = [
@@ -50,7 +57,7 @@ class GenerateCodeService
             'name' => 'request',
             'label' => 'Request.php',
             'lang' => 'php',
-            'code' => (new RequestGenerator($params['module'], $params['name'], ['created_at', 'updated_at', 'deleted_at']))->preview()
+            'code' => (new RequestGenerator($params['module'], $params['name'], ['created_at', 'updated_at', 'deleted_at']))->preview(),
         ];
 
         return $result;

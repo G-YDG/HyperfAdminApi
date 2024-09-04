@@ -7,9 +7,18 @@ declare(strict_types=1);
  *  * @link     https://github.com/G-YDG/HyperfAdminApi
  *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
+use App\Common\Middleware\CorsMiddleware;
+use Hyperf\Validation\Middleware\ValidationMiddleware;
+
+/*
+ * This file is part of HyperfAdmin.
+ *
+ *  * @see     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 return [
     'http' => [
-        Hyperf\Validation\Middleware\ValidationMiddleware::class,
-        App\Common\Middleware\CorsMiddleware::class,
+        ValidationMiddleware::class,
+        CorsMiddleware::class,
     ],
 ];

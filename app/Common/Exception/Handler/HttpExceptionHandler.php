@@ -1,11 +1,20 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
+
 namespace App\Common\Exception\Handler;
 
 use Hyperf\Codec\Json;
 use Hyperf\HttpMessage\Exception\HttpException;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 class HttpExceptionHandler extends \Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler
 {
@@ -13,7 +22,7 @@ class HttpExceptionHandler extends \Hyperf\HttpServer\Exception\Handler\HttpExce
      * Handle the exception, and return the specified result.
      * @param HttpException $throwable
      */
-    public function handle(\Throwable $throwable, ResponseInterface $response)
+    public function handle(Throwable $throwable, ResponseInterface $response)
     {
         $this->logger->debug($this->formatter->format($throwable));
 
@@ -21,7 +30,7 @@ class HttpExceptionHandler extends \Hyperf\HttpServer\Exception\Handler\HttpExce
 
         $format = [
             'msg' => $throwable->getMessage() ?: 'ERROR',
-            'code' => (int)$throwable->getStatusCode(),
+            'code' => (int) $throwable->getStatusCode(),
         ];
 
         return $response->withHeader('Server', env('APP_NAME', 'Hyperf'))

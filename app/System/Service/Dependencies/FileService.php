@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
+
 namespace App\System\Service\Dependencies;
 
 use App\Common\Constants\ErrorCode;
@@ -8,6 +16,7 @@ use App\System\Interfaces\FileServiceInterface;
 use App\System\Request\UploadFileRequest;
 use Hyperf\Di\Annotation\Inject;
 use League\Flysystem\Filesystem;
+use Throwable;
 
 class FileService implements FileServiceInterface
 {
@@ -22,7 +31,7 @@ class FileService implements FileServiceInterface
             $stream = fopen($file->getRealPath(), 'r+');
             $fileName = $this->generateFileName($file);
             $this->filesystem->writeStream($fileName, $stream);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             throw new UserException($e->getMessage(), ErrorCode::SERVER_ERROR);
         } finally {
             if (isset($stream) && is_resource($stream)) {
@@ -35,6 +44,6 @@ class FileService implements FileServiceInterface
 
     protected function generateFileName($file): string
     {
-        return md5( $file->getClientFilename()) . '.' . $file->getExtension();
+        return md5($file->getClientFilename()) . '.' . $file->getExtension();
     }
 }

@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Model;
 
@@ -28,7 +34,6 @@ use HyperfAdminCore\Model;
  */
 class SystemMenu extends Model
 {
-
     /**
      * The table associated with the model.
      */
@@ -61,7 +66,7 @@ class SystemMenu extends Model
     protected array $casts = ['id' => 'integer', 'parent_id' => 'integer', 'status' => 'integer', 'hide_menu' => 'integer', 'sort' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
     /**
-     * 通过中间表获取角色
+     * 通过中间表获取角色.
      */
     public function roles(): BelongsToMany
     {

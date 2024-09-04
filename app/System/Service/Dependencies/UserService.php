@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
+
 namespace App\System\Service\Dependencies;
 
 use App\Common\Constants\ErrorCode;
@@ -10,6 +18,7 @@ use App\System\Interfaces\UserServiceInterface;
 use App\System\Mapper\SystemUserMapper;
 use App\System\Model\SystemUser;
 use App\System\Vo\UserServiceVo;
+use Exception;
 use Hyperf\Database\Model\ModelNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -17,8 +26,6 @@ use Psr\Container\NotFoundExceptionInterface;
 class UserService implements UserServiceInterface
 {
     /**
-     * @param UserServiceVo $userServiceVo
-     * @return string
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -36,19 +43,17 @@ class UserService implements UserServiceInterface
                     $userLoginAfter->token = $token;
                     event($userLoginAfter);
                     return $token;
-                } else {
-                    $userLoginAfter->loginStatus = false;
-                    $userLoginAfter->message = '用户被禁用';
-                    event($userLoginAfter);
-                    throw new UserBanException;
                 }
-            } else {
                 $userLoginAfter->loginStatus = false;
-                $userLoginAfter->message = '用户不存在或密码不正确';
+                $userLoginAfter->message = '用户被禁用';
                 event($userLoginAfter);
-                throw new NormalStatusException;
+                throw new UserBanException();
             }
-        } catch (\Exception $e) {
+            $userLoginAfter->loginStatus = false;
+            $userLoginAfter->message = '用户不存在或密码不正确';
+            event($userLoginAfter);
+            throw new NormalStatusException();
+        } catch (Exception $e) {
             if ($e instanceof ModelNotFoundException) {
                 throw new NormalStatusException('用户不存在或密码不正确', ErrorCode::NO_USER);
             }
@@ -61,7 +66,6 @@ class UserService implements UserServiceInterface
             console()->error($e->getMessage());
             throw new NormalStatusException('未知错误');
         }
-
     }
 
     public function logout()

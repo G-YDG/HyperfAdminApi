@@ -193,13 +193,13 @@ if (! function_exists('makeDir')) {
     /**
      * 判断文件夹是否存在，不存在则创建.
      */
-    function makeDir($dir, $mode = 0700): bool
+    function makeDir(string $dir, int $mode = 0700): bool
     {
         if (is_dir($dir) || @mkdir($dir, $mode)) {
             return true;
         }
 
-        if (!mkdir(dirname($dir), $mode)) {
+        if (! mkdir(dirname($dir), $mode)) {
             return false;
         }
 

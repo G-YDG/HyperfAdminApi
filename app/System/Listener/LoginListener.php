@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
+
 namespace App\System\Listener;
 
 use App\System\Event\UserLoginAfter;
@@ -10,20 +18,18 @@ use HyperfAdminCore\Request;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-
 #[Listener]
 class LoginListener implements ListenerInterface
 {
     public function listen(): array
     {
         return [
-            UserLoginAfter::class
+            UserLoginAfter::class,
         ];
     }
 
     /**
      * @param UserLoginAfter $event
-     * @return void
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

@@ -1,5 +1,13 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
+
 namespace App\Common\Helper;
 
 use Hyperf\Stringable\Str;
@@ -24,7 +32,7 @@ class SpreadsheetExport
 
     public function fillWorksheet($title, $headers, $rows, $headersStyle = null, $rowsStyle = null): static
     {
-        $this->sheetIndex += 1;
+        ++$this->sheetIndex;
 
         if ($this->sheetIndex == 1) {
             $worksheet = $this->spreadsheet->getActiveSheet();
@@ -59,6 +67,45 @@ class SpreadsheetExport
     }
 
     /**
+     * 导出文件.
+     * @param mixed $filename
+     * @param null|mixed $filepath
+     */
+    public function exportFile($filename, $filepath = null): array
+    {
+        $filepath = $filepath ?? $this->getLocalFilePath();
+        makeDir($filepath);
+
+        $fileName = $this->getFileName($filename);
+        $filePath = $this->getFilePath($fileName, $filepath);
+
+        $writer = @IOFactory::createWriter($this->spreadsheet, $this->getFileType());
+        $writer->save($filePath);
+
+        $this->spreadsheet->disconnectWorksheets();
+        unset($this->spreadsheet);
+
+        return [$filePath, $fileName];
+    }
+
+    public function getFileType(): string
+    {
+        return $this->fileType;
+    }
+
+    /**
+     * 设置文件类型.
+     *
+     * @return $this
+     */
+    public function setFileType(string $fileType): static
+    {
+        $this->fileType = $fileType;
+
+        return $this;
+    }
+
+    /**
      * 单元格.
      * @return string[]
      */
@@ -69,7 +116,6 @@ class SpreadsheetExport
 
     /**
      * 默认表头样式.
-     * @return array
      */
     protected function getDefaultHeaderStyle(): array
     {
@@ -94,7 +140,6 @@ class SpreadsheetExport
 
     /**
      * 默认表体样式.
-     * @return array
      */
     protected function getDefaultRowsStyle(): array
     {
@@ -114,33 +159,7 @@ class SpreadsheetExport
     }
 
     /**
-     * 导出文件.
-     *
-     * @param $filename
-     * @param $filepath
-     * @return array
-     */
-    public function exportFile($filename, $filepath = null): array
-    {
-        $filepath = $filepath ?? $this->getLocalFilePath();
-        makeDir($filepath);
-
-        $fileName = $this->getFileName($filename);
-        $filePath = $this->getFilePath($fileName, $filepath);
-
-        $writer = @IOFactory::createWriter($this->spreadsheet, $this->getFileType());
-        $writer->save($filePath);
-
-        $this->spreadsheet->disconnectWorksheets();
-        unset($this->spreadsheet);
-
-        return [$filePath, $fileName];
-    }
-
-    /**
      * 获取本地文件路径.
-     *
-     * @return string
      */
     protected function getLocalFilepath(): string
     {
@@ -149,9 +168,6 @@ class SpreadsheetExport
 
     /**
      * 设置文件名.
-     *
-     * @param string $filename
-     * @return string
      */
     protected function getFileName(string $filename): string
     {
@@ -159,32 +175,9 @@ class SpreadsheetExport
     }
 
     /**
-     * @return string
-     */
-    public function getFileType(): string
-    {
-        return $this->fileType;
-    }
-
-    /**
-     * 设置文件类型
-     *
-     * @param string $fileType
-     * @return $this
-     */
-    public function setFileType(string $fileType): static
-    {
-        $this->fileType = $fileType;
-
-        return $this;
-    }
-
-    /**
      * 获取文件路径.
-     *
-     * @param $fileName
-     * @param $filepath
-     * @return string
+     * @param mixed $fileName
+     * @param null|mixed $filepath
      */
     protected function getFilePath($fileName, $filepath = null): string
     {

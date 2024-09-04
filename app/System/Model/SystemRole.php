@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Model;
 
@@ -20,7 +26,6 @@ use HyperfAdminCore\Model;
  */
 class SystemRole extends Model
 {
-
     /**
      * The table associated with the model.
      */
@@ -29,7 +34,7 @@ class SystemRole extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected array $fillable =  ['id', 'name', 'code', 'status', 'sort', 'created_at', 'updated_at', 'deleted_at'];
+    protected array $fillable = ['id', 'name', 'code', 'status', 'sort', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * The attributes that should be cast to native types.
@@ -37,7 +42,7 @@ class SystemRole extends Model
     protected array $casts = ['id' => 'integer', 'status' => 'integer', 'sort' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
     /**
-     * 通过中间表获取菜单
+     * 通过中间表获取菜单.
      */
     public function menus(): BelongsToMany
     {
@@ -45,7 +50,7 @@ class SystemRole extends Model
     }
 
     /**
-     * 通过中间表获取用户
+     * 通过中间表获取用户.
      */
     public function users(): BelongsToMany
     {

@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Mapper;
 
@@ -32,9 +38,7 @@ class SystemRoleMapper extends AbstractMapper
     }
 
     /**
-     * 通过角色ID列表获取菜单ID
-     * @param array $ids
-     * @return array
+     * 通过角色ID列表获取菜单ID.
      */
     public function getMenuIdsByRoleIds(array $ids): array
     {
@@ -52,9 +56,7 @@ class SystemRoleMapper extends AbstractMapper
     }
 
     /**
-     * 检查角色code是否已存在
-     * @param string $code
-     * @return bool
+     * 检查角色code是否已存在.
      */
     public function checkRoleCode(string $code): bool
     {
@@ -63,7 +65,7 @@ class SystemRoleMapper extends AbstractMapper
 
     public function handleSearch(Builder $query, ?array $params): Builder
     {
-        if (!empty($params['name'])) {
+        if (! empty($params['name'])) {
             $query->whereRaw("name like '%" . $params['name'] . "%'");
         }
         if (isset($params['status']) && is_numeric($params['status'])) {
@@ -73,10 +75,7 @@ class SystemRoleMapper extends AbstractMapper
     }
 
     /**
-     * 更新角色
-     * @param int $id
-     * @param array $data
-     * @return bool
+     * 更新角色.
      */
     #[Transaction]
     public function update(int $id, array $data): bool
@@ -85,7 +84,7 @@ class SystemRoleMapper extends AbstractMapper
         $this->filterExecuteAttributes($data, true);
         $result = $this->model::query()->where('id', $id)->update($data);
         $role = $this->model::find($id);
-        if ($role && !empty($menuIds)) {
+        if ($role && ! empty($menuIds)) {
             $role->menus()->sync(array_unique($menuIds));
             return true;
         }

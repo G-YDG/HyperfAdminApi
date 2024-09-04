@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Request;
 
@@ -20,7 +26,7 @@ class SystemUserRequest extends FormRequest
     ];
 
     /**
-     * 验证规则
+     * 验证规则.
      * @return string[]
      */
     public function rules(): array
@@ -29,7 +35,7 @@ class SystemUserRequest extends FormRequest
             'nickname' => 'required|string',
             'avatar' => 'required|url',
             'phone' => ['numeric', function ($attribute, $value, $fail) {
-                if (!preg_match('/^(1[3-9])\d{9}$/', $value)) {
+                if (! preg_match('/^(1[3-9])\d{9}$/', $value)) {
                     $fail('手机号格式有误');
                 }
             }],
@@ -40,8 +46,8 @@ class SystemUserRequest extends FormRequest
             'oldPassword' => ['required', function ($attribute, $value, $fail) {
                 $service = $this->container->get(SystemUserService::class);
                 /* @var SystemUser $model */
-                $model = $service->mapper->getModel()::find((int)auth()->id(), ['password']);
-                if (!$service->mapper->checkPass($value, $model->password)) {
+                $model = $service->mapper->getModel()::find((int) auth()->id(), ['password']);
+                if (! $service->mapper->checkPass($value, $model->password)) {
                     $fail('密码验证失败');
                 }
             }],
@@ -52,7 +58,7 @@ class SystemUserRequest extends FormRequest
 
     /**
      * 字段映射名称
-     * return array
+     * return array.
      */
     public function attributes(): array
     {

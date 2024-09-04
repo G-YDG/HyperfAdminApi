@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\Tools\Request;
 
@@ -9,7 +15,7 @@ use HyperfAdminCore\FormRequest;
 class GenerateCodeRequest extends FormRequest
 {
     /**
-     * 验证规则
+     * 验证规则.
      * @return string[]
      */
     public function rules(): array
@@ -22,7 +28,7 @@ class GenerateCodeRequest extends FormRequest
 
     /**
      * 字段映射名称
-     * return array
+     * return array.
      */
     public function attributes(): array
     {

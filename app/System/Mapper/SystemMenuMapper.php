@@ -1,12 +1,18 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Mapper;
 
+use App\System\Model\SystemMenu;
 use App\System\Model\SystemUser;
 use HyperfAdminCore\Abstracts\AbstractMapper;
-use App\System\Model\SystemMenu;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -15,8 +21,7 @@ class SystemMenuMapper extends AbstractMapper
     public $model;
 
     /**
-     * 查询的菜单字段
-     * @var array
+     * 查询的菜单字段.
      */
     public array $menuField = [
         'id',
@@ -27,7 +32,7 @@ class SystemMenuMapper extends AbstractMapper
         'route',
         'component',
         'redirect',
-        'hide_menu'
+        'hide_menu',
     ];
 
     public function assignModel(): void
@@ -36,8 +41,7 @@ class SystemMenuMapper extends AbstractMapper
     }
 
     /**
-     * 获取超级管理员的路由菜单
-     * @return array
+     * 获取超级管理员的路由菜单.
      */
     public function getSuperAdminRouters(): array
     {
@@ -50,9 +54,7 @@ class SystemMenuMapper extends AbstractMapper
     }
 
     /**
-     * 通过菜单ID列表获取菜单数据
-     * @param array $ids
-     * @return array
+     * 通过菜单ID列表获取菜单数据.
      */
     public function getRoutersByIds(array $ids): array
     {
@@ -66,8 +68,7 @@ class SystemMenuMapper extends AbstractMapper
     }
 
     /**
-     * 获取前端选择树
-     * @return array
+     * 获取前端选择树.
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -78,7 +79,7 @@ class SystemMenuMapper extends AbstractMapper
             ->where('status', $this->model::ENABLE)
             ->orderBy('sort', 'desc');
 
-        if (!isSuperAdmin()) {
+        if (! isSuperAdmin()) {
             $roleData = container()->get(SystemRoleMapper::class)->getMenuIdsByRoleIds(
                 SystemUser::find(auth()->id(), ['id'])->roles()->pluck('id')->toArray()
             );

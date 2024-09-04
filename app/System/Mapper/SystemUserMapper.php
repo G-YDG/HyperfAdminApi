@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Mapper;
 
@@ -20,19 +26,15 @@ class SystemUserMapper extends AbstractMapper
     }
 
     /**
-     * 通过用户名检查用户
-     * @param string $username
-     * @return SystemUser|Builder|Model
+     * 通过用户名检查用户.
      */
-    public function checkUserByUsername(string $username): Model|SystemUser|Builder
+    public function checkUserByUsername(string $username): Builder|Model|SystemUser
     {
         return $this->model::query()->where('username', $username)->firstOrFail();
     }
 
     /**
-     * 通过用户名检查是否存在
-     * @param string $username
-     * @return bool
+     * 通过用户名检查是否存在.
      */
     public function existsByUsername(string $username): bool
     {
@@ -41,9 +43,6 @@ class SystemUserMapper extends AbstractMapper
 
     /**
      * 检查用户密码
-     * @param String $password
-     * @param string $hash
-     * @return bool
      */
     public function checkPass(string $password, string $hash): bool
     {
@@ -52,9 +51,6 @@ class SystemUserMapper extends AbstractMapper
 
     /**
      * 初始化用户密码
-     * @param int $id
-     * @param string $password
-     * @return bool
      */
     public function initUserPassword(int $id, string $password): bool
     {
@@ -67,9 +63,7 @@ class SystemUserMapper extends AbstractMapper
     }
 
     /**
-     * 新增用户
-     * @param array $data
-     * @return int
+     * 新增用户.
      */
     #[Transaction]
     public function save(array $data): int
@@ -83,10 +77,7 @@ class SystemUserMapper extends AbstractMapper
     }
 
     /**
-     * 更新用户
-     * @param int $id
-     * @param array $data
-     * @return bool
+     * 更新用户.
      */
     #[Transaction]
     public function update(int $id, array $data): bool
@@ -97,7 +88,7 @@ class SystemUserMapper extends AbstractMapper
         $result = parent::update($id, $data);
         $user = $this->model::find($id);
         if ($user && $result) {
-            !empty($role_ids) && $user->roles()->sync($role_ids);
+            ! empty($role_ids) && $user->roles()->sync($role_ids);
             return true;
         }
         return false;
@@ -105,7 +96,7 @@ class SystemUserMapper extends AbstractMapper
 
     public function handleSearch(Builder $query, ?array $params): Builder
     {
-        if (!empty($params['username'])) {
+        if (! empty($params['username'])) {
             $query->whereRaw("username like '%" . $params['username'] . "%'");
         }
         if (isset($params['status']) && is_numeric($params['status'])) {
@@ -113,7 +104,7 @@ class SystemUserMapper extends AbstractMapper
         }
         if (isset($params['role_id']) && is_numeric($params['role_id'])) {
             $query->whereRaw(
-                "id IN ( SELECT system_user_id FROM system_user_role WHERE system_role_id = ? )",
+                'id IN ( SELECT system_user_id FROM system_user_role WHERE system_role_id = ? )',
                 [$params['role_id']]
             );
         }

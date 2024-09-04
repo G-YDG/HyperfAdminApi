@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Controller;
 
@@ -20,11 +26,9 @@ class FileController extends AbstractController
     protected FileServiceInterface $service;
 
     /**
-     * 文件上传
-     * @param UploadFileRequest $request
-     * @return ResponseInterface
+     * 文件上传.
      */
-    #[PostMapping("upload")]
+    #[PostMapping('upload')]
     public function upload(UploadFileRequest $request): ResponseInterface
     {
         return $this->success(['url' => $this->service->upload($request)]);

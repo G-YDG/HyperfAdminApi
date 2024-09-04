@@ -1,19 +1,22 @@
 <?php
 
 declare(strict_types=1);
-
 /**
- * This file is part of qbhy/hyperf-auth.
+ * This file is part of HyperfAdmin.
  *
- * @link     https://github.com/qbhy/hyperf-auth
- * @document https://github.com/qbhy/hyperf-auth/blob/master/README.md
- * @contact  qbhy0715@qq.com
- * @license  https://github.com/qbhy/hyperf-auth/blob/master/LICENSE
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
  */
-
+use App\System\Model\SystemUser;
+use Hyperf\Redis\Redis;
+use Qbhy\HyperfAuth\Guard\JwtGuard;
+use Qbhy\HyperfAuth\Guard\SessionGuard;
+use Qbhy\HyperfAuth\Guard\SsoGuard;
+use Qbhy\HyperfAuth\HyperfRedisCache;
 use Qbhy\HyperfAuth\Provider\EloquentProvider;
 use Qbhy\SimpleJwt\Encoders;
 use Qbhy\SimpleJwt\EncryptAdapters as Encrypter;
+
 use function Hyperf\Support\env;
 use function Hyperf\Support\make;
 
@@ -28,13 +31,13 @@ return [
             'clients' => explode(',', env('AUTH_SSO_CLIENTS', 'pc')),
 
             'redis' => function () {
-                return make(\Hyperf\Redis\Redis::class);
+                return make(Redis::class);
             },
 
             // 自定义 redis key，必须包含 {uid}，{uid} 会被替换成用户ID
             'redis_key' => 'u:token:{uid}',
 
-            'driver' => Qbhy\HyperfAuth\Guard\SsoGuard::class,
+            'driver' => SsoGuard::class,
             'provider' => 'users',
 
             /*
@@ -54,13 +57,13 @@ return [
              * 可选配置
              * jwt 生命周期，单位秒，默认一天
              */
-            'ttl' => (int)env('SIMPLE_JWT_TTL', 60 * 60 * 24),
+            'ttl' => (int) env('SIMPLE_JWT_TTL', 60 * 60 * 24),
 
             /*
              * 可选配置
              * 允许过期多久以内的 token 进行刷新，单位秒，默认一周
              */
-            'refresh_ttl' => (int)env('SIMPLE_JWT_REFRESH_TTL', 60 * 60 * 24 * 7),
+            'refresh_ttl' => (int) env('SIMPLE_JWT_REFRESH_TTL', 60 * 60 * 24 * 7),
 
             /*
              * 可选配置
@@ -92,7 +95,7 @@ return [
              */
             // 'cache' => new Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir()),
             'cache' => function () {
-                return make(Qbhy\HyperfAuth\HyperfRedisCache::class);
+                return make(HyperfRedisCache::class);
             },
 
             /*
@@ -102,7 +105,7 @@ return [
             'prefix' => env('SIMPLE_JWT_PREFIX', 'default'),
         ],
         'jwt' => [
-            'driver' => Qbhy\HyperfAuth\Guard\JwtGuard::class,
+            'driver' => JwtGuard::class,
             'provider' => 'users',
 
             /*
@@ -122,13 +125,13 @@ return [
              * 可选配置
              * jwt 生命周期，单位秒，默认一天
              */
-            'ttl' => (int)env('SIMPLE_JWT_TTL', 60 * 60 * 24),
+            'ttl' => (int) env('SIMPLE_JWT_TTL', 60 * 60 * 24),
 
             /*
              * 可选配置
              * 允许过期多久以内的 token 进行刷新，单位秒，默认一周
              */
-            'refresh_ttl' => (int)env('SIMPLE_JWT_REFRESH_TTL', 60 * 60 * 24 * 7),
+            'refresh_ttl' => (int) env('SIMPLE_JWT_REFRESH_TTL', 60 * 60 * 24 * 7),
 
             /*
              * 可选配置
@@ -161,7 +164,7 @@ return [
             // 'cache' => new Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir()),
             // 如果需要分布式部署，请选择 redis 或者其他支持分布式的缓存驱动
             'cache' => function () {
-                return make(Qbhy\HyperfAuth\HyperfRedisCache::class);
+                return make(HyperfRedisCache::class);
             },
 
             /*
@@ -171,14 +174,14 @@ return [
             'prefix' => env('SIMPLE_JWT_PREFIX', 'default'),
         ],
         'session' => [
-            'driver' => Qbhy\HyperfAuth\Guard\SessionGuard::class,
+            'driver' => SessionGuard::class,
             'provider' => 'users',
         ],
     ],
     'providers' => [
         'users' => [
             'driver' => EloquentProvider::class,
-            'model' => App\System\Model\SystemUser::class,
+            'model' => SystemUser::class,
         ],
     ],
 ];
