@@ -11,9 +11,12 @@ declare(strict_types=1);
 namespace App\System\Listener;
 
 use App\System\Event\UserLoginAfter;
+use App\System\Model\SystemLoginLog;
 use App\System\Model\SystemUser;
+use App\System\Service\SystemLoginLogService;
 use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
+use HyperfAdminCore\Helper\RequestHelper;
 use HyperfAdminCore\Request;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -29,14 +32,28 @@ class LoginListener implements ListenerInterface
     }
 
     /**
-     * @param UserLoginAfter $event
+     * @param object $event
+     * @return void
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     public function process(object $event): void
     {
         $request = container()->get(Request::class);
+        $service = container()->get(SystemLoginLogService::class);
+
+        $agent = $request->getHeader('user-agent')[0] ?? 'unknown';
         $ip = $request->ip();
+        $service->save([
+            'username' => $event->userinfo['username'],
+            'ip' => $ip,
+            'ip_location' => RequestHelper::ipToRegion($ip),
+            'os' => RequestHelper::os($agent),
+            'browser' => RequestHelper::browser($agent),
+            'status' => $event->loginStatus ? SystemLoginLog::SUCCESS : SystemLoginLog::FAIL,
+            'message' => $event->message,
+            'login_time' => date('Y-m-d H:i:s'),
+        ]);
 
         if ($event->loginStatus) {
             $event->userinfo['login_ip'] = $ip;

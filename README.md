@@ -58,3 +58,22 @@ docker-compose restart
 ```bash
 docker-compose logs -f -t --tail=100
 ```
+
+# 开发示例
+
+以下以 `system_login_log` 为例
+
+生成迁移文件
+```bash
+php bin/hyperf.php gen:migration system_login_log
+```
+
+表结构设计完成后，执行迁移
+```bash
+php bin/hyperf.php migrate
+```
+
+根据数据表，快速生成基础代码文件
+```bash
+php bin/hyperf.php gen-template System system_login_log
+```
