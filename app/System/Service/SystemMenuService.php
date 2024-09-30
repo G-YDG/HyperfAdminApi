@@ -24,6 +24,28 @@ class SystemMenuService extends AbstractService
         $this->mapper = $mapper;
     }
 
+    public function save(array $data): int
+    {
+        return $this->mapper->save($this->handleData($data));
+    }
+
+    protected function handleData(array $data): array
+    {
+        if (empty($data['parent_id']) || $data['parent_id'] == 0) {
+            $data['level'] = '0';
+            $data['parent_id'] = 0;
+        } else {
+            $parentMenu = $this->mapper->read((int)$data['parent_id']);
+            $data['level'] = $parentMenu['level'] . ',' . $parentMenu['id'];
+        }
+        return $data;
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        return $this->mapper->update($id, $this->handleData($data));
+    }
+
     public function getTreeList(?array $params = null): array
     {
         $params = array_merge(['orderBy' => 'sort', 'orderType' => 'desc'], $params);
