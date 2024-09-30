@@ -50,7 +50,7 @@ class SystemMenuRequest extends FormRequest
             'id' => 'required',
             'parent_id' => 'required',
             'name' => 'required|max:30',
-            'icon' => 'required|string',
+            'icon' => 'string',
             'code' => 'required|min:3|max:50',
             'route' => 'required|string',
             'status' => ['integer', Rule::in([Model::ENABLE, Model::DISABLE])],

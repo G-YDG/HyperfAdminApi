@@ -40,9 +40,11 @@ class Permission extends Seeder
             [1002, 1000, '0,1000', 'menu.dashboard.userInfo', 'UserInfo', 'icon-user', 'userInfo', '', null, 1, 2, 0, null, $datetime, $datetime, null],
 
             [1100, 0, '0', 'menu.system', 'System', 'icon-lock', 'system', '', null, 1, 1, 99, null, $datetime, $datetime, null],
-            [1101, 1100, '0,1100', 'menu.system.user', 'SystemUser', 'icon-user-group', 'user', '', null, 1, 1, 0, null, $datetime, $datetime, null],
-            [1102, 1100, '0,1100', 'menu.system.role', 'SystemRole', 'icon-user-add', 'role', '', null, 1, 1, 0, null, $datetime, $datetime, null],
-            [1103, 1100, '0,1100', 'menu.system.menu', 'SystemMenu', 'icon-menu', 'menu', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1101, 1100, '0,1100', 'menu.system.user', 'SystemUser', '', 'user', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1102, 1100, '0,1100', 'menu.system.role', 'SystemRole', '', 'role', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1103, 1100, '0,1100', 'menu.system.menu', 'SystemMenu', '', 'menu', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1104, 1100, '0,1100', 'menu.system.logs', 'SystemLogs', '', 'logs', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1105, 1104, '0,1100,1104', 'menu.system.logs.login', 'SystemLoginLogs', '', 'login', '', null, 1, 1, 0, null, $datetime, $datetime, null],
 
             [1200, 0, '0', 'menu.tools', 'Tools', 'icon-tool', 'tools', '', null, 1, 1, 0, null, $datetime, $datetime, null],
             [1201, 1200, '0,1200', 'menu.tools.generateCode', 'ToolsGenerateCode', 'icon-code', 'generateCode', '', null, 1, 1, 0, null, $datetime, $datetime, null],

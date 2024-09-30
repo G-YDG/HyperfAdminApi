@@ -32,8 +32,6 @@ class LoginListener implements ListenerInterface
     }
 
     /**
-     * @param object $event
-     * @return void
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

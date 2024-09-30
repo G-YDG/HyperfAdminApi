@@ -1,6 +1,12 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of HyperfAdmin.
+ *
+ *  * @link     https://github.com/G-YDG/HyperfAdminApi
+ *  * @license  https://github.com/G-YDG/HyperfAdminApi/blob/master/LICENSE
+ */
 
 namespace App\System\Controller;
 
@@ -20,23 +26,20 @@ class LogsController extends AbstractController
     protected SystemLoginLogService $loginLogService;
 
     /**
-     * 获取登录日志分页列表
-     * @return ResponseInterface
+     * 获取登录日志分页列表.
      */
-    #[GetMapping("getLoginLogPageList")]
+    #[GetMapping('getLoginLogPageList')]
     public function getLoginLogPageList(): ResponseInterface
     {
         return $this->success($this->loginLogService->getPageList($this->request->all()));
     }
 
     /**
-     * 删除登录日志
-     * @return ResponseInterface
+     * 删除登录日志.
      */
-    #[PostMapping("deleteLoginLog")]
+    #[PostMapping('deleteLoginLog')]
     public function deleteLoginLog(): ResponseInterface
     {
-        return $this->loginLogService->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->loginLogService->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
-
 }

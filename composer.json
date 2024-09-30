@@ -38,7 +38,7 @@
         "hyperf/support": "~3.1.0",
         "hyperf/validation": "~3.1.0",
         "phpoffice/phpspreadsheet": "^2.2",
-        "ydg/hyperf-admin-core": "~3.1",
+        "ydg/hyperf-admin-core": "^3.1.1",
         "ydg/hyperf-admin-generator": "^3.1"
     },
     "require-dev": {

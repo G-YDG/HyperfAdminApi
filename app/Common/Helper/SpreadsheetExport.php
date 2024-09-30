@@ -74,7 +74,7 @@ class SpreadsheetExport
     public function exportFile($filename, $filepath = null): array
     {
         $filepath = $filepath ?? $this->getLocalFilePath();
-        makeDir($filepath);
+        make_dir($filepath);
 
         $fileName = $this->getFileName($filename);
         $filePath = $this->getFilePath($fileName, $filepath);

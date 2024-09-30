@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f020bbafce7814776fa4f39fa49d045f",
+    "content-hash": "4407fbf656953e1e7ed3d7a272713472",
     "packages": [
         {
             "name": "96qbhy/hyperf-auth",
@@ -7173,16 +7173,16 @@
         },
         {
             "name": "ydg/hyperf-admin-core",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/G-YDG/HyperfAdminCore.git",
-                "reference": "7d1cd95d47ea9ea6042c61f5141323813a7964ff"
+                "reference": "ebf19b1ea9a91dbf10a51703e73f8069a4845ba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/G-YDG/HyperfAdminCore/zipball/7d1cd95d47ea9ea6042c61f5141323813a7964ff",
-                "reference": "7d1cd95d47ea9ea6042c61f5141323813a7964ff",
+                "url": "https://api.github.com/repos/G-YDG/HyperfAdminCore/zipball/ebf19b1ea9a91dbf10a51703e73f8069a4845ba5",
+                "reference": "ebf19b1ea9a91dbf10a51703e73f8069a4845ba5",
                 "shasum": ""
             },
             "require": {
@@ -7200,7 +7200,8 @@
                 "hyperf/redis": "~3.1.0",
                 "hyperf/support": "~3.1.0",
                 "hyperf/validation": "~3.1.0",
-                "php": ">=8.1"
+                "php": ">=8.1",
+                "zoujingli/ip2region": "^2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
@@ -7220,6 +7221,9 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/Helper/functions.php"
+                ],
                 "psr-4": {
                     "HyperfAdminCore\\": "src/"
                 }
@@ -7244,9 +7248,9 @@
             ],
             "support": {
                 "issues": "https://github.com/G-YDG/HyperfAdminCore/issues",
-                "source": "https://github.com/G-YDG/HyperfAdminCore/tree/v3.1.0"
+                "source": "https://github.com/G-YDG/HyperfAdminCore/tree/v3.1.1"
             },
-            "time": "2024-08-23T09:36:03+00:00"
+            "time": "2024-09-30T06:30:15+00:00"
         },
         {
             "name": "ydg/hyperf-admin-generator",
@@ -7311,6 +7315,52 @@
                 "source": "https://github.com/G-YDG/HyperfAdminGenerator/tree/v3.1.0"
             },
             "time": "2024-08-27T02:57:19+00:00"
+        },
+        {
+            "name": "zoujingli/ip2region",
+            "version": "v2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zoujingli/ip2region.git",
+                "reference": "66895178be204521e9f5ae9df0ea502893ee53b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zoujingli/ip2region/zipball/66895178be204521e9f5ae9df0ea502893ee53b2",
+                "reference": "66895178be204521e9f5ae9df0ea502893ee53b2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Ip2Region.php",
+                    "XdbSearcher.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Anyon",
+                    "email": "zoujingli@qq.com",
+                    "homepage": "https://thinkadmin.top"
+                }
+            ],
+            "description": "Ip2Region for PHP",
+            "homepage": "https://github.com/zoujingli/Ip2Region",
+            "keywords": [
+                "Ip2Region"
+            ],
+            "support": {
+                "issues": "https://github.com/zoujingli/ip2region/issues",
+                "source": "https://github.com/zoujingli/ip2region/tree/v2.0.6"
+            },
+            "time": "2024-08-02T01:01:01+00:00"
         }
     ],
     "packages-dev": [
