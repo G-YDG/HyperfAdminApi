@@ -38,4 +38,10 @@ class GenerateCodeController extends AbstractController
     {
         return $this->success($this->service->preview($request->all()));
     }
+
+    #[GetMapping('datasource')]
+    public function datasource(): ResponseInterface
+    {
+        return $this->success($this->service->datasource());
+    }
 }

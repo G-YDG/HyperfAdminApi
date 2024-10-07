@@ -57,7 +57,13 @@ class TemplateCommand extends HyperfCommand
 
         (new ServiceGenerator($module, $table))->generator();
 
-        (new RequestGenerator($module, $table, ['created_at', 'updated_at', 'deleted_at']))->generator();
+        (new RequestGenerator(
+            $module,
+            $table,
+            ['created_at', 'updated_at', 'deleted_at'],
+            null,
+            $this->input->getOption('pool'),
+        ))->generator();
 
         (new ControllerGenerator($module, $table, Auth::class, true))->generator();
     }
