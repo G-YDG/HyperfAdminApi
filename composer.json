@@ -61,7 +61,6 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Common/Helper/function.php",
             "app/System/Helper/function.php"
         ]
     },
