@@ -11,6 +11,12 @@ HyperfAdmin 采用前后端分离的架构，前端使用 Vue3 + Vite4 + Pinia +
 
 # 快速开始
 
+根据自身环境配置环境变量
+
+```bash
+cp .env.example .env
+```
+
 使用 docker-compose 启动项目
 
 ```bash

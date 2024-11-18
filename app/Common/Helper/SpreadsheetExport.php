@@ -10,68 +10,29 @@ declare(strict_types=1);
 
 namespace App\Common\Helper;
 
+use Exception;
 use Hyperf\Stringable\Str;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
+use OpenSpout\Common\Entity\Row;
+use OpenSpout\Common\Entity\Style\Border;
+use OpenSpout\Common\Entity\Style\BorderPart;
+use OpenSpout\Common\Entity\Style\CellAlignment;
+use OpenSpout\Common\Entity\Style\Color;
+use OpenSpout\Common\Entity\Style\Style;
+use OpenSpout\Common\Exception\InvalidArgumentException;
+use OpenSpout\Writer\CSV\Options as CsvOptions;
+use OpenSpout\Writer\CSV\Writer as CsvWriter;
+use OpenSpout\Writer\ODS\Options as OdsOptions;
+use OpenSpout\Writer\ODS\Writer as OdsWriter;
+use OpenSpout\Writer\XLSX\Options as XlsxOptions;
+use OpenSpout\Writer\XLSX\Writer as XlsxWriter;
 
 class SpreadsheetExport
 {
-    protected Spreadsheet $spreadsheet;
+    protected $writer = null;
 
-    protected int $sheetIndex = 0;
+    private string $fileType = 'xlsx';
 
-    private string $fileType = IOFactory::WRITER_XLSX;
-
-    public function __construct()
-    {
-        $this->spreadsheet = new Spreadsheet();
-    }
-
-    public function fillWorksheet($title, $headers, $rows, $headersStyle = null, $rowsStyle = null): static
-    {
-        ++$this->sheetIndex;
-
-        if ($this->sheetIndex == 1) {
-            $worksheet = $this->spreadsheet->getActiveSheet();
-        } else {
-            $worksheet = $this->spreadsheet->createSheet();
-        }
-
-        // 设置工作表的标题名称
-        $worksheet->setTitle($title);
-
-        $sheetCellMap = $this->sheetCellMap();
-
-        // 获取最大列值
-        $maxColumnCell = $sheetCellMap[count($headers) - 1];
-
-        // 设置首行单元格样式
-        $worksheet->getStyle("A1:{$maxColumnCell}1")->applyFromArray($headersStyle ?? $this->getDefaultHeaderStyle());
-
-        // 设置首行单元格内容
-        foreach ($headers as $key => $value) {
-            $worksheet->getColumnDimension($sheetCellMap[$key])->setWidth(25);
-            $worksheet->setCellValue($sheetCellMap[$key] . 1, $value);
-        }
-
-        // 设置单元格样式
-        $worksheet->getStyle("A2:{$maxColumnCell}" . count($rows) + 1)->applyFromArray($rowsStyle ?? $this->getDefaultRowsStyle());
-
-        // 填充单元格内容
-        $worksheet->fromArray($rows, null, 'A2');
-
-        return $this;
-    }
-
-    /**
-     * 导出文件.
-     * @param mixed $filename
-     * @param null|mixed $filepath
-     */
-    public function exportFile($filename, $filepath = null): array
+    public function initFilePath($filename, $filepath = null): array
     {
         $filepath = $filepath ?? $this->getLocalFilePath();
         make_dir($filepath);
@@ -79,13 +40,89 @@ class SpreadsheetExport
         $fileName = $this->getFileName($filename);
         $filePath = $this->getFilePath($fileName, $filepath);
 
-        $writer = @IOFactory::createWriter($this->spreadsheet, $this->getFileType());
-        $writer->save($filePath);
+        return [$fileName, $filePath];
+    }
 
-        $this->spreadsheet->disconnectWorksheets();
-        unset($this->spreadsheet);
+    /**
+     * @param $headers
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    public function initWriter($headers): array
+    {
+        $border = new Border(...[
+            new BorderPart(Border::TOP, Color::BLACK, Border::WIDTH_THIN, Border::STYLE_SOLID),
+            new BorderPart(Border::BOTTOM, Color::BLACK, Border::WIDTH_THIN, Border::STYLE_SOLID),
+            new BorderPart(Border::LEFT, Color::BLACK, Border::WIDTH_THIN, Border::STYLE_SOLID),
+            new BorderPart(Border::RIGHT, Color::BLACK, Border::WIDTH_THIN, Border::STYLE_SOLID),
+        ]);
 
+        $defaultStyle = new Style();
+        $defaultStyle->setFontSize(11);
+        $defaultStyle->setBackgroundColor(Color::rgb(255, 238, 238));
+        $defaultStyle->setCellAlignment(CellAlignment::CENTER);
+        $defaultStyle->setBorder($border);
+
+        $rowStyle = new Style();
+        $rowStyle->setFontSize(11);
+        $rowStyle->setCellAlignment(CellAlignment::RIGHT);
+        $rowStyle->setBorder($border);
+
+        $options = \Hyperf\Support\make($this->getOptions());
+        if (method_exists($options, 'setColumnWidthForRange')) {
+            $options->setColumnWidthForRange(20, 1, count($headers));
+        }
+
+        $writer = \Hyperf\Support\make($this->getWriter(), [$options]);
+
+        return [$writer, $defaultStyle, $rowStyle];
+    }
+
+    public function writerHeaders($writer, $headers, $defaultStyle): void
+    {
+        $writer->addRow(Row::fromValues($headers, $defaultStyle));
+    }
+
+    public function writerRows($writer, $rows, $rowStyle): void
+    {
+        foreach ($rows as $row) {
+            $writer->addRow(Row::fromValues($row, $rowStyle));
+        }
+    }
+
+    /**
+     * @param $headers
+     * @param $rows
+     * @param $filename
+     * @param $filepath
+     * @return array
+     * @throws Exception
+     */
+    public function exportFile($filename, $headers, $rows, $filepath = null): array
+    {
+        [$fileName, $filePath] = $this->initFilePath($filename, $filepath);
+        [$writer, $defaultStyle, $rowStyle] = $this->initWriter($headers);
+        $writer->openToFile($filePath);
+        $this->writerHeaders($writer, $headers, $defaultStyle);
+        $this->writerRows($writer, $rows, $rowStyle);
+        $writer->close();
         return [$filePath, $fileName];
+    }
+
+    /**
+     * 获取本地文件路径.
+     */
+    protected function getLocalFilepath(): string
+    {
+        return config('spreadsheet.local_file_path');
+    }
+
+    /**
+     * 设置文件名.
+     */
+    protected function getFileName(string $filename): string
+    {
+        return sprintf('%s_%s.' . Str::lower($this->getFileType()), $filename, date('Ymd_His'));
     }
 
     public function getFileType(): string
@@ -106,81 +143,41 @@ class SpreadsheetExport
     }
 
     /**
-     * 单元格.
-     * @return string[]
-     */
-    protected function sheetCellMap(): array
-    {
-        return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    }
-
-    /**
-     * 默认表头样式.
-     */
-    protected function getDefaultHeaderStyle(): array
-    {
-        return [
-            'alignment' => [
-                'horizontal' => Alignment::HORIZONTAL_CENTER,
-            ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['argb' => 'fffbeeee'],
-            ],
-            'borders' => [
-                'outline' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                ],
-                'inside' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * 默认表体样式.
-     */
-    protected function getDefaultRowsStyle(): array
-    {
-        return [
-            'alignment' => [
-                'horizontal' => Alignment::HORIZONTAL_RIGHT,
-            ],
-            'borders' => [
-                'outline' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                ],
-                'inside' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * 获取本地文件路径.
-     */
-    protected function getLocalFilepath(): string
-    {
-        return config('spreadsheet.local_file_path');
-    }
-
-    /**
-     * 设置文件名.
-     */
-    protected function getFileName(string $filename): string
-    {
-        return sprintf('%s_%s.' . Str::lower($this->getFileType()), $filename, date('Ymd_His'));
-    }
-
-    /**
      * 获取文件路径.
      * @param mixed $fileName
-     * @param null|mixed $filepath
+     * @param mixed|null $filepath
+     * @return string
      */
-    protected function getFilePath($fileName, $filepath = null): string
+    protected function getFilePath(mixed $fileName, mixed $filepath = null): string
     {
         return $filepath . DIRECTORY_SEPARATOR . $fileName;
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    private function getOptions(): string
+    {
+        return match ($this->getFileType()) {
+            'xlsx' => XlsxOptions::class,
+            'csv' => CsvOptions::class,
+            'ods' => OdsOptions::class,
+            default => throw new Exception('Unknown file type'),
+        };
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    private function getWriter(): string
+    {
+        return match ($this->getFileType()) {
+            'xlsx' => XlsxWriter::class,
+            'csv' => CsvWriter::class,
+            'ods' => OdsWriter::class,
+            default => throw new Exception('Unknown file type'),
+        };
     }
 }

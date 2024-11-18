@@ -126,9 +126,8 @@ class UserController extends AbstractController
             ];
         });
 
-        [$filepath, $filename] = make(SpreadsheetExport::class)
-            ->fillWorksheet('用户信息', ['ID', '用户名', '创建时间'], $data)
-            ->exportFile('用户信息');
+        [$filepath, $filename] = make(SpreadsheetExport::class)->exportFile('用户信息', ['ID', '用户名', '创建时间'], $data);
+
 
         return $this->_download($filepath, $filename);
     }
