@@ -10,11 +10,14 @@ declare(strict_types=1);
 
 namespace App\System\Controller;
 
+use App\System\Dictionary\DicConfigGroupKey;
 use App\System\Interfaces\UserServiceInterface;
 use App\System\Request\SystemUserRequest;
+use App\System\Service\SystemConfigGroupService;
 use App\System\Vo\UserServiceVo;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\Controller;
+use Hyperf\HttpServer\Annotation\GetMapping;
 use Hyperf\HttpServer\Annotation\PostMapping;
 use Hyperf\Validation\Annotation\Scene;
 use HyperfAdminCore\Abstracts\AbstractController;
@@ -26,6 +29,9 @@ class HomeController extends AbstractController
 {
     #[Inject]
     protected UserServiceInterface $userService;
+
+    #[Inject]
+    protected SystemConfigGroupService $systemConfigGroupService;
 
     /**
      * 用户登录.
@@ -50,5 +56,14 @@ class HomeController extends AbstractController
     {
         $this->userService->logout();
         return $this->success();
+    }
+
+    /**
+     * 获取网站设置
+     */
+    #[GetMapping("getWebsiteSetting")]
+    public function getWebsiteSetting(): ResponseInterface
+    {
+        return $this->success($this->systemConfigGroupService->getConfigsByGroupKey(DicConfigGroupKey::WEBSITE_SETTING));
     }
 }

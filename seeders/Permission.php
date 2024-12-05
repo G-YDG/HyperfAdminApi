@@ -12,7 +12,6 @@ use App\System\Model\SystemRole;
 use App\System\Model\SystemRoleMenu;
 use App\System\Model\SystemUser;
 use App\System\Model\SystemUserRole;
-use Hyperf\Database\Model\Model;
 use Hyperf\Database\Seeders\Seeder;
 use Hyperf\DbConnection\Db;
 
@@ -45,6 +44,9 @@ class Permission extends Seeder
             [1103, 1100, '0,1100', 'menu.system.menu', 'SystemMenu', '', 'menu', '', null, 1, 1, 0, null, $datetime, $datetime, null],
             [1104, 1100, '0,1100', 'menu.system.logs', 'SystemLogs', '', 'logs', '', null, 1, 1, 0, null, $datetime, $datetime, null],
             [1105, 1104, '0,1100,1104', 'menu.system.logs.login', 'SystemLoginLogs', '', 'login', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1106, 1100, '0,1100', 'menu.system.config', 'SystemConfig', '', 'config', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1107, 1106, '0,1100,1106', 'menu.system.config.group', 'SystemConfigGroup', '', 'group', '', null, 1, 1, 0, null, $datetime, $datetime, null],
+            [1108, 1106, '0,1100,1106', 'menu.system.config.list', 'SystemConfigList', '', 'list', '', null, 1, 1, 0, null, $datetime, $datetime, null],
 
             [1200, 0, '0', 'menu.tools', 'Tools', 'icon-tool', 'tools', '', null, 1, 1, 0, null, $datetime, $datetime, null],
             [1201, 1200, '0,1200', 'menu.tools.generateCode', 'ToolsGenerateCode', '', 'generateCode', '', null, 1, 1, 0, null, $datetime, $datetime, null],
