@@ -10,11 +10,13 @@ class SystemConfigGroupRequest extends FormRequest
 {
     protected array $scenes = [
         'save' => [
-            'name'
+            'key',
+            'name',
         ],
         'update' => [
             'id',
-            'name'
+            'key',
+            'name',
         ],
     ];
 
@@ -26,6 +28,7 @@ class SystemConfigGroupRequest extends FormRequest
     {
         return [
             'id' => 'required',
+            'key' => 'required',
             'name' => 'required'
         ];
     }
@@ -37,8 +40,9 @@ class SystemConfigGroupRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'id' => 'id',
-            'name' => '名称'
+            'id' => '分组ID',
+            'key' => '分组键值',
+            'name' => '分组名称',
         ];
     }
 }

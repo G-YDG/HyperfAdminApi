@@ -12,12 +12,14 @@ class SystemConfigRequest extends FormRequest
         'save' => [
             'key',
             'value',
+            'value_type',
             'remark'
         ],
         'update' => [
             'id',
             'key',
             'value',
+            'value_type',
             'remark'
         ],
     ];
@@ -29,14 +31,9 @@ class SystemConfigRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //主键
             'id' => 'required',
-            //配置项
             'key' => 'required',
-            //配置项
             'value' => 'required',
-            //备注
-            'remark' => 'required'
         ];
     }
 
@@ -47,10 +44,12 @@ class SystemConfigRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'id' => '主键',
-            'key' => '配置项',
-            'value' => '配置项',
-            'remark' => '备注'
+            'id' => '配置ID',
+            'key' => '配置键值',
+            'value' => '配置内容',
+            'value_type' => '配置类型',
+            'remark' => '备注说明',
+            'system_group_id' => '配置分组'
         ];
     }
 }
